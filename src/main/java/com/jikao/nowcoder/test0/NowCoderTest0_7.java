@@ -1,18 +1,18 @@
-package com.jikao.nowcoder;
+package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class NowCoderTest5 {
+public class NowCoderTest0_7 {
 
-    // TODO 21,22,24,25
+    // TODO 31,32,34,35
     public static void main(String[] args) throws Exception {
-//        test21();
-//        test22();
-        test23();
-//        test24();
-//        test25();
+//        test31();
+//        test32();
+        test33();
+//        test34();
+//        test35();
     }
 
     /**
@@ -31,76 +31,44 @@ public class NowCoderTest5 {
     }
 
     /**
-     * (1) HJ17.坐标移动
-     * A10;S20;W10;D30;X;A1A;B10A11;;A10;
-     * 处理过程：
-     * 起点（0,0）
-     * +A10=  （-10,0）
-     * +S20=  (-10,-20)
-     * +W10=  (-10,-10)
-     * +D30=  (20,-10)
-     * +x =  无效
-     * +A1A=  无效
-     * +B10A11 =  无效
-     * +一个空 不影响
-     * + A10  =  (10,-10)
-     * 结果 （10， -10）
+     *HJ33 整数与IP地址间的转换
+     * 输入描述：
+     * 输入
+     * 1 输入IP地址
+     * 2 输入10进制型的IP地址
      *
+     * 输出描述：
+     * 输出
+     * 1 输出转换成10进制的IP地址
+     * 2 输出转换后的IP地址
      *
-     * A10;S20;W10;D30;X;A1A;B10A11;;A10;
-     * 10,-10
+     * 输入：
+     * 10.0.3.193
+     * 167969729
      *
-     * ABC;AKL;DA1;
-     * 0,0
+     * 输出：
+     * 167773121
+     * 10.3.3.193
+     * @throws Exception
      */
-    public static void test17() throws Exception{
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String line = bufferedReader.readLine();
-        String move1 = move(line);
-        System.out.println(move1);
+    public static void test33() throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = null;
+        while ((str = br.readLine()) != null) {
+            String[] ip = str.split("\\.");
+            long num = Long.parseLong(br.readLine());
+            //转10进制
+            System.out.println(Long.parseLong(ip[0]) << 24 | Long.parseLong(ip[1]) << 16 |
+                    Long.parseLong(ip[2]) << 8 | Long.parseLong(ip[3]));
+            //转ip地址
+            StringBuilder sb = new StringBuilder();
+            sb.append(((num >> 24) & 255)).append(".").append(((num >> 16) & 255))
+                    .append(".").append(((num >> 8) & 255)).append(".").append((num & 255));
+            System.out.println(sb.toString());
+        }
     }
 
-    /**
-     * 输入：
-     * A10;S20;W10;D30;X;A1A;B10A11;;A10;
-     * 输出：
-     * 10,-10
-     * @param string
-     * @return
-     */
-    private static String move(String string) {
-        int x = 0;
-        int y = 0;
-        String[] tempArray = string.split(";");
-        for(String tempString : tempArray) {
-            if (!tempString.equals("") && tempString.length() == 3) {
-                String position = tempString.substring(0, 1);
-                int number;
-                try {
-                    number = Integer.parseInt(tempString.substring(1, 3));
-                } catch (NumberFormatException e) {
-                    continue;
-                }
-                switch (position) {
-                    case "A":
-                        x = x - number;
-                        break;
-                    case "S":
-                        y = y - number;
-                        break;
-                    case "W":
-                        y = y + number;
-                        break;
-                    case "D":
-                        x = x + number;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        return x + "," + y;
-    }
+
 
 
     /**

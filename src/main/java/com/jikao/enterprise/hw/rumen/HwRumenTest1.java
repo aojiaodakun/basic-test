@@ -1,7 +1,7 @@
 package com.jikao.enterprise.hw.rumen;
 
-import com.jikao.nowcoder.NowCoderTest1;
-import com.jikao.nowcoder.NowCoderTest2;
+import com.jikao.nowcoder.test0.NowCoderTest0_1;
+import com.jikao.nowcoder.test0.NowCoderTest0_2;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,7 +28,7 @@ public class HwRumenTest1 {
      * (1) 输入处理（重要）：HJ5.进制转换
      */
     private static void test1() throws Exception{
-        NowCoderTest1.test5();
+        NowCoderTest0_1.test5();
     }
 
     /**
@@ -64,7 +64,7 @@ public class HwRumenTest1 {
      * @throws Exception
      */
     private static void test3() throws Exception{
-        NowCoderTest1.test3();
+        NowCoderTest0_1.test3();
     }
 
 
@@ -73,7 +73,7 @@ public class HwRumenTest1 {
      * @throws Exception
      */
     private static void test4() throws Exception{
-        NowCoderTest2.test10();
+        NowCoderTest0_2.test10();
     }
 
     /**

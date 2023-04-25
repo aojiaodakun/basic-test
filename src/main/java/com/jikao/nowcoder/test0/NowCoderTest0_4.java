@@ -1,12 +1,10 @@
-package com.jikao.nowcoder;
-
-import scala.Int;
+package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class NowCoderTest4 {
+public class NowCoderTest0_4 {
 
     // TODO 16,18,19
     public static void main(String[] args) throws Exception {

@@ -1,8 +1,10 @@
 package com.jikao.enterprise.hw.string;
 
-import com.jikao.nowcoder.NowCoderTest1;
-import com.jikao.nowcoder.NowCoderTest4;
-import com.jikao.nowcoder.NowCoderTest5;
+import com.jikao.nowcoder.test0.NowCoderTest0_4;
+import com.jikao.nowcoder.test0.NowCoderTest0_5;
+import com.jikao.nowcoder.test0.NowCoderTest0_7;
+import com.jikao.nowcoder.test1.NowCoderTest1_1;
+import com.jikao.nowcoder.test1.NowCoderTest1_2;
 
 /**
  * 2.字符串操作（6题）
@@ -28,21 +30,42 @@ public class HwStringTest1 {
      * (1) HJ17.坐标移动
      */
     private static void test1() throws Exception{
-        NowCoderTest4.test17();
+        NowCoderTest0_4.test17();
     }
 
     /**
      * (2) HJ20.密码验证合格程序
      */
     private static void test2() throws Exception{
-        NowCoderTest4.test20();
+        NowCoderTest0_4.test20();
     }
 
     /**
      * (3) *HJ23.删除字符串中出现次数最少的字符
      */
     private static void test3() throws Exception{
-        NowCoderTest5.test23();
+        NowCoderTest0_5.test23();
+    }
+
+    /**
+     * (4) *HJ33.整数与IP地址间的转换
+     */
+    private static void test4() throws Exception{
+        NowCoderTest0_7.test33();
+    }
+
+    /**
+     * (5) HJ101.输入整型数组和排序标识
+     */
+    private static void test5() throws Exception{
+        NowCoderTest1_1.test1();
+    }
+
+    /**
+     * (6) *HJ106.字符串逆序
+     */
+    private static void test6() throws Exception{
+        NowCoderTest1_2.test1();
     }
 
 }

@@ -1,18 +1,18 @@
-package com.jikao.nowcoder;
+package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class NowCoderTest2 {
+public class NowCoderTest0_1 {
 
-    // TODO 6~9
+
     public static void main(String[] args) throws Exception {
-//        test6();
-//        test7();
-//        test8();
-//        test9();
-        test10();
+//        test1();
+//        test2();
+//        test3();
+//        test4();
+        test5();
     }
 
     /**
@@ -112,32 +112,34 @@ public class NowCoderTest2 {
     }
 
     /**
-     * HJ10 字符个数统计
+     * 写出一个程序，接受一个十六进制的数，输出该数值的十进制表示。
      *
      * 输入：
-     * abc
-     * 输出：
-     * 3
+     * 0xAA
      *
-     * 输入：
-     * aaa
      * 输出：
-     * 1
+     * 170
      * @throws Exception
      */
-    public static void test10() throws Exception {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String line = bufferedReader.readLine();
-        int[] a = new int[128];
-        int count=0;
-        for(int i=0;i<line.length();i++){
-            char b = line.charAt(i);
-            if(a[b]==0){
-                count++;
-                a[b]=1;
+    public static void test5() throws Exception {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String input;
+        while((input = bf.readLine())!=null){
+            String temp = input.substring(0, 2);
+            int sum = 0;
+            int length = temp.length();
+            for(int i= length-1;i>=0;i--){
+                char c = temp.charAt(i);
+                int tempNum = c;
+                if(tempNum>=65){
+                    tempNum = tempNum - 65 + 10;
+                }else{
+                    tempNum = tempNum - 48;
+                }
+                sum = sum + (int) Math.pow(16, length-i-1)*tempNum;
             }
+            System.out.println(sum);
         }
-        System.out.println(count);
     }
 
 }
