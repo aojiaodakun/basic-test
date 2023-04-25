@@ -1,8 +1,7 @@
 package com.jikao.enterprise.hw.sort;
 
-import com.jikao.nowcoder.test0.NowCoderTest0_2;
-import com.jikao.nowcoder.test0.NowCoderTest0_3;
-import com.jikao.nowcoder.test0.NowCoderTest0_4;
+import com.jikao.leetcode.LeetCodeTest1;
+import com.jikao.nowcoder.test0.*;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -44,7 +43,22 @@ public class HwSortTest1 {
      * (3) HJ27.查找兄弟单词
      */
     private static void test3() throws Exception{
-
+        NowCoderTest0_6.test27();
     }
+
+    /**
+     * (4) *NC37.合并区间
+     */
+    private static void test4() throws Exception{
+        LeetCodeTest1.mergeMethod();
+    }
+
+    /**
+     * (5) *HJ68.成绩排序
+     */
+    private static void test5() throws Exception{
+        NowCoderTest0_14.test68();
+    }
+
 
 }
