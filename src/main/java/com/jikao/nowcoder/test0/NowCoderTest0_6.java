@@ -3,16 +3,21 @@ package com.jikao.nowcoder.test0;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class NowCoderTest0_6 {
 
-    // TODO 26,28,29,30
+    // TODO 26,29,30
     public static void main(String[] args) throws Exception {
 //        test26();
-        test27();
-//        test28();
+//        test27();
+        test28();
 //        test29();
 //        test30();
     }
@@ -98,36 +103,98 @@ public class NowCoderTest0_6 {
 
 
     /**
+     * HJ28 素数伴侣
+     *
+     * 输入:
+     * 有一个正偶数 n ，表示待挑选的自然数的个数。后面给出 n 个具体的数字。
+     *
+     * 输出:
+     * 输出一个整数 K ，表示你求得的“最佳方案”组成“素数伴侣”的对数。
+     *
+     * 数据范围： 1≤n≤100  ，输入的数据大小满足 2≤val≤30000
+     *
      * 输入：
-     * 3
-     * 2
-     * 2
-     * 1
+     * 4
+     * 2 5 6 13
      *
      * 输出：
-     * 1
      * 2
+     * @throws Exception
      */
-    public static void test3() throws Exception {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-        while ((str = bf.readLine()) != null) {
-            boolean[] flagArrays = new boolean[1001];
-            StringBuilder sb = new StringBuilder();
-            int n = Integer.parseInt(str);
-            for (int i = 0; i < n; i++){
-                flagArrays[Integer.parseInt(bf.readLine())] = true;
+    public static void test28() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line = null;
+        while((line = br.readLine()) != null) {
+            int count = Integer.parseInt(line);
+            String[] elements = br.readLine().split(" ");
+            int[] nums = new int[count];
+            int oddCount = 0;
+            int index = 0;
+            for(String ele : elements) {
+                nums[index] = Integer.parseInt(ele);
+                if(nums[index] % 2 == 1) {
+                    oddCount++;    //记录奇数个数
+                }
+                index++;
             }
 
-            for (int i = 0; i < 1001; i++){
-                if (flagArrays[i]) {
-                    sb.append(i).append("\n");
+            int[] oddNums = new int[oddCount];
+            int[] evenNums = new int[count - oddCount];
+            int oddIndex = 0;
+            int evenIndex = 0;
+            //奇偶分离
+            for(int num : nums) {
+                if(num % 2 == 0) {
+                    evenNums[evenIndex++] = num;
+                } else {
+                    oddNums[oddIndex++] = num;
                 }
             }
 
-            sb.deleteCharAt(sb.length() - 1);
-            System.out.println(sb);
+            int pairCount = 0;
+            int[] evenPair = new int[evenIndex];
+            for(int i = 0; i < oddIndex; i++) {
+                boolean[] used = new boolean[evenIndex];
+                if(findPair(i, oddNums, evenNums, evenPair, used)){
+                    pairCount++;
+                }
+            }
+            System.out.println(pairCount);
         }
+    }
+    /**
+     偶数+奇数才可能是素数
+     */
+    private static boolean findPair(int oddIndex, int[] oddNums, int[] evenNums, int[] evenPair, boolean[] used) {
+        for(int i = 0;i < evenNums.length; i++) {
+            if(!used[i] && isP(oddNums[oddIndex] + evenNums[i])) {
+                used[i] = true;
+                if(evenPair[i] == 0 || findPair(evenPair[i] - 1,oddNums,evenNums,evenPair,used)) {
+                    evenPair[i] = oddIndex + 1;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    //见过比较经典的思路
+    private static boolean isP(int num) {
+        if(num <= 3) {
+            return num > 1;    // 2,3都是素数
+        }
+        //6*n+2;6*n+3;6*n+4;6*n等都不是素数;可过滤掉2/3的判断
+        if(num % 6 != 1 && num % 6 !=5) {
+            return false;
+        }
+        double sqrt = Math.sqrt(num);
+        for (int i = 5; i < sqrt; i += 6) {
+            //只保留2类数据num % 6 == 1 num % 6 == 5
+            if (num % i == 0 || num % (i + 2) == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**

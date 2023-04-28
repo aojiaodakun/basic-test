@@ -58,14 +58,14 @@ public class HwStringTest1 {
      * (5) HJ101.输入整型数组和排序标识
      */
     private static void test5() throws Exception{
-        NowCoderTest1_1.test1();
+        NowCoderTest1_1.test101();
     }
 
     /**
      * (6) *HJ106.字符串逆序
      */
     private static void test6() throws Exception{
-        NowCoderTest1_2.test1();
+        NowCoderTest1_2.test106();
     }
 
 }

@@ -6,11 +6,11 @@ import java.util.Scanner;
 
 public class NowCoderTest1_2 {
 
-    // TODO 107~110
+    // TODO 107,109,110
     public static void main(String[] args) throws Exception {
-        test1();
+//        test106();
 //        test2();
-//        test3();
+        test108();
 //        test4();
 //        test5();
     }
@@ -28,7 +28,7 @@ public class NowCoderTest1_2 {
      *
      * @throws Exception
      */
-    public static void test1() throws Exception{
+    public static void test106() throws Exception{
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String inputCount;
         while ((inputCount = br.readLine()) != null) {
@@ -84,35 +84,37 @@ public class NowCoderTest1_2 {
     }
 
     /**
-     * 输入：
-     * 3
-     * 2
-     * 2
-     * 1
+     * (1) *HJ108.求最小公倍数
+     * 正整数A和正整数B 的最小公倍数是指 能被A和B整除的最小的正整数值，设计一个算法，求输入A和B的最小公倍数。
+     * 数据范围：1≤a,b≤100000
+     *输入：
+     * 5 7
      *
      * 输出：
-     * 1
-     * 2
+     * 35
+     *
+     * 输入：
+     * 2 4
+     *
+     * 输出：
+     * 4
      */
-    public static void test3() throws Exception {
+    public static void test108() throws Exception {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         String str;
         while ((str = bf.readLine()) != null) {
-            boolean[] flagArrays = new boolean[1001];
-            StringBuilder sb = new StringBuilder();
-            int n = Integer.parseInt(str);
-            for (int i = 0; i < n; i++){
-                flagArrays[Integer.parseInt(bf.readLine())] = true;
-            }
-
-            for (int i = 0; i < 1001; i++){
-                if (flagArrays[i]) {
-                    sb.append(i).append("\n");
+            String[] strArray = str.split(" ");
+            int a = Integer.parseInt(strArray[0]);
+            int b = Integer.parseInt(strArray[1]);
+            int min = Math.min(a, b);
+            int max = Math.max(a, b);
+            for (int i = 1; i <= min; i++) {
+                int tempNum = max * i;
+                if (tempNum % min == 0) {
+                    System.out.println(tempNum);
+                    break;
                 }
             }
-
-            sb.deleteCharAt(sb.length() - 1);
-            System.out.println(sb);
         }
     }
 
