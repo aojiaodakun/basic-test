@@ -64,7 +64,7 @@ public class NowCoderTest0_7 {
             StringBuilder sb = new StringBuilder();
             sb.append(((num >> 24) & 255)).append(".").append(((num >> 16) & 255))
                     .append(".").append(((num >> 8) & 255)).append(".").append((num & 255));
-            System.out.println(sb.toString());
+            System.out.println(sb);
         }
     }
 

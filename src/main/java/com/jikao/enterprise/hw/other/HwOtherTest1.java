@@ -2,10 +2,11 @@ package com.jikao.enterprise.hw.other;
 
 import com.jikao.nowcoder.test0.NowCoderTest0_1;
 import com.jikao.nowcoder.test0.NowCoderTest0_12;
+import com.jikao.nowcoder.test0.NowCoderTest0_5;
 import com.jikao.nowcoder.test0.NowCoderTest0_6;
 import com.jikao.nowcoder.test1.NowCoderTest1_2;
 
-import java.util.Arrays;
+import java.util.*;
 
 /**
  * 9.其他（6题）
@@ -23,9 +24,9 @@ public class HwOtherTest1 {
 //        test1();
 //        test2();
 //        test3();
-        my.test4();
-//        test5();
-//        test6();
+//        my.test4();
+//        my.test5();
+        my.test6();
     }
 
 
@@ -72,96 +73,86 @@ public class HwOtherTest1 {
         System.out.println(result1);
     }
 
+    // dr,dc 配合使用得到 grid[r][c] 上grid[r-1][c]左grid[r][c-1]下grid[r+1][c]右grid[r][c+1]的元素
+    int[] dr = new int[]{-1, 0, 1, 0};
+    int[] dc = new int[]{0, -1, 0, 1};
+
     public int orangesRotting(int[][] grid) {
-        int[][] num2Array = new int[grid.length][2];
-        for (int i = 0; i < num2Array.length; i++) {
-            for (int j = 0; j < num2Array[0].length; j++) {
-                num2Array[i][j] = -1;
-            }
-        }
-        int num2_index = 0;
-        // 1、拿到所有2的坐标位
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                int tempNum = grid[i][j];
-                if (tempNum == 2) {
-                    num2Array[num2_index][0] = i;
-                    num2Array[num2_index][1] = j;
-                    num2_index++;
-                }
-            }
-        }
-        // 没有找到2的坐标
-        if (num2_index == 0) {
-            return -1;
-        }
+        // 获取二维数组的行数row 和 列数 column
+        int R = grid.length, C = grid[0].length;
 
-        // 2、感染2的坐标位
-        // 分钟数
-        int minute = 0;
-        int count = 0;
-        // 蔓延成功标志
-        while (true) {
-            boolean flag = false;
-            count++;
-            int new_num2_index = 0;
-            int[][] newNum2Array = new int[grid.length][2];
-            for (int i = 0; i < newNum2Array.length; i++) {
-                for (int j = 0; j < newNum2Array[0].length; j++) {
-                    newNum2Array[i][j] = -1;
-                }
-            }
-
-
-            for (int i = 0; i < num2Array.length; i++) {
-                int x = num2Array[i][0];
-                int y = num2Array[i][1];
-                if (x == -1 && y == -1) {
-                    break;
+        // queue : all starting cells with rotten oranges
+        Queue<Integer> queue = new ArrayDeque();
+        Map<Integer, Integer> depth = new HashMap();
+        for (int r = 0; r < R; ++r)
+            for (int c = 0; c < C; ++c)
+                if (grid[r][c] == 2) {
+                    int code = r * C + c;  // 转化为索引唯一的一维数组
+                    queue.add(code); //存储腐烂橘子
+                    depth.put(code, 0); //存储橘子变为腐烂时的时间,key为橘子的一维数组下标，value为变腐烂的时间
                 }
 
-                // 上
-                if (x-1>0 && grid[x-1][y] == 1) {
-                    grid[x-1][y] = 2;
-                    newNum2Array[new_num2_index][0] = x-1;
-                    newNum2Array[new_num2_index][1] = y;
-                    new_num2_index++;
-                    flag = true;
+        int ans = 0;
+        while (!queue.isEmpty()) {
+            int code = queue.remove();
+            int r = code / C, c = code % C;
+            for (int k = 0; k < 4; ++k) {
+                int nr = r + dr[k];
+                int nc = c + dc[k];
+                if (0 <= nr && nr < R && 0 <= nc && nc < C && grid[nr][nc] == 1) {
+                    grid[nr][nc] = 2;
+                    int ncode = nr * C + nc;
+                    queue.add(ncode);
+                    // 计次的关键 元素 grid[r][c] 的上左下右元素得腐烂时间应该一致
+                    depth.put(ncode, depth.get(code) + 1);
+                    ans = depth.get(ncode);
                 }
-                // 下
-                if (x+1<grid.length && grid[x+1][y] == 1) {
-                    grid[x+1][y] = 2;
-                    newNum2Array[new_num2_index][0] = x+1;
-                    newNum2Array[new_num2_index][1] = y;
-                    new_num2_index++;
-                    flag = true;
-                }
-                // 左
-                if (y-1>0 && grid[x][y-1] == 1) {
-                    grid[x][y-1] = 2;
-                    newNum2Array[new_num2_index][0] = x;
-                    newNum2Array[new_num2_index][1] = y-1;
-                    new_num2_index++;
-                    flag = true;
-                }
-                // 右
-                if (y+1<grid[0].length && grid[x][y+1] == 1) {
-                    grid[x][y+1] = 2;
-                    newNum2Array[new_num2_index][0] = x;
-                    newNum2Array[new_num2_index][1] = y+1;
-                    new_num2_index++;
-                    flag = true;
-                }
-            }
-            if (flag) {
-                minute++;
-                num2Array = newNum2Array;
-            }
-            if (count != minute) {
-                break;
             }
         }
-        return minute;
+
+        //检查grid，此时的grid能被感染已经都腐烂了，此时还新鲜的橘子无法被感染
+        for (int[] row: grid)
+            for (int v: row)
+                if (v == 1)
+                    return -1;
+        return ans;
+
     }
+
+    /**
+     * (5) leetcode 204.计数质数
+     * @throws Exception
+     */
+    private void test5() throws Exception{
+//        System.out.println(countPrimes(100));
+        System.out.println(isPrime(100));
+    }
+
+    public int countPrimes(int n) {
+        int count = 0;
+        for (int i = 2; i < n; ++i) {
+            count += isPrime(i) ? 1 : 0;
+        }
+        return count;
+    }
+
+    public boolean isPrime(int x) {
+        for (int i = 2; i * i <= x; ++i) {
+            if (x % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * (6) HJ25. 数据分类处理
+     * @throws Exception
+     */
+    private void test6() throws Exception{
+        NowCoderTest0_5.test25();
+    }
+
+
 
 }

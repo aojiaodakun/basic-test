@@ -19,8 +19,8 @@ public class HwSortTest1 {
 
     public static void main(String[] args) throws Exception {
 //        test1();
-        test2();
-//        test3();
+//        test2();
+        test3();
 //        test4();
 //        test5();
     }
