@@ -1,11 +1,6 @@
 package com.jikao.enterprise.hw.combination;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 5.排列组合（2题）
@@ -17,7 +12,8 @@ public class HwCombinationTest1 {
     List<String> list1 = new LinkedList<>();
 
     public static void main(String[] args) throws Exception {
-        new HwCombinationTest1().test1();
+//        new HwCombinationTest1().test1();
+        new HwCombinationTest1().test2();
 
 
     }
@@ -69,6 +65,44 @@ public class HwCombinationTest1 {
         chars[x] = chars[y];
         chars[y] = temp;
     }
+
+    /**
+     * 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
+     *
+     * 你可以按 任何顺序 返回答案。
+     * @throws Exception
+     */
+    private void test2() throws Exception{
+        int n = 5;
+        int k = 3;
+        List<List<Integer>> res = combine(n, k);
+        System.out.println(res);
+    }
+
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> res = new ArrayList<>();
+        if (k <= 0 || n < k) {
+            return res;
+        }
+        Deque<Integer> path = new ArrayDeque<>();
+        dfs(n, k, 1, path, res);
+        return res;
+    }
+
+    private void dfs(int n, int k, int begin, Deque<Integer> path, List<List<Integer>> res) {
+        if (path.size() == k) {
+            res.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = begin; i <= n; i++) {
+            path.addLast(i);
+            System.out.println("递归之前 => " + path);
+            dfs(n, k, i + 1, path, res);
+            path.removeLast();
+            System.out.println("递归之后 => " + path);
+        }
+    }
+
 
 
 }

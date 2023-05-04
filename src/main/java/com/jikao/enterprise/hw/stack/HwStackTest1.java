@@ -9,7 +9,7 @@ import java.util.Stack;
 
 /**
  * 4.栈（2题）
- * (1) NC60.括号序列
+ * (1) NC60.排队序列
  * (2) *leetcode 1614.括号的最大嵌套深度
  */
 public class HwStackTest1 {
@@ -22,7 +22,7 @@ public class HwStackTest1 {
 
     /**
      * TODO
-     * (1) NC60.括号序列
+     * (1) NC60.排队序列
      * https://leetcode.cn/problems/permutation-sequence/solution/di-kge-pai-lie-by-leetcode-solution/
      * 给出集合 [1,2,3,...,n]，其所有元素共有 n! 种排列。
      * 按大小顺序列出所有排列情况，并一一标记，当 n = 3 时, 所有排列如下：
@@ -63,7 +63,7 @@ public class HwStackTest1 {
         }
 
         --k;
-        StringBuffer ans = new StringBuffer();
+        StringBuilder ans = new StringBuilder();
         int[] valid = new int[n + 1];
         Arrays.fill(valid, 1);
         for (int i = 1; i <= n; ++i) {
