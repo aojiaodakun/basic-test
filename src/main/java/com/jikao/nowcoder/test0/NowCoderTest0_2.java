@@ -3,48 +3,80 @@ package com.jikao.nowcoder.test0;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class NowCoderTest0_2 {
 
-    // TODO 6~9
+
     public static void main(String[] args) throws Exception {
 //        test6();
 //        test7();
 //        test8();
-//        test9();
-        test10();
+        test9();
+//        test10();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
-     */
-    public static void test1() {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-            String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
-        }
-    }
-
-    /**
+     * HJ6 质数因子
+     * 功能:输入一个正整数，按照从小到大的顺序输出它的所有质因子（重复的也要列举）（如180的质因子为2 2 3 3 5 ）
+     *
      * 输入：
-     * ABCabc
-     * A
+     * 180
+     *
+     * 输出：
+     * 2 2 3 3 5
+     */
+    public static void test6() {
+        Scanner scanner = new Scanner(System.in);
+        long num = scanner.nextLong();
+        // 开方
+        long k = (long) Math.sqrt(num);
+
+        for (long i = 2; i <= k; ++i) {
+            while (num % i == 0) {
+                System.out.print(i + " ");
+                num /= i;
+            }
+        }
+        System.out.println(num == 1 ? "": num+" ");
+    }
+
+
+    /**
+     * HJ7 取近似值
+     * 描述
+     * 写出一个程序，接受一个正浮点数值，输出该数值的近似整数值。如果小数点后数值大于等于 0.5 ,向上取整；小于 0.5 ，则向下取整。
+     *
+     * 数据范围：保证输入的数字在 32 位浮点数范围内
+     *
+     * 输入：
+     * 5.5
+     * 复制
+     * 输出：
+     * 6
+     * 说明：
+     * 0.5>=0.5，所以5.5需要向上取整为6
+     *
+     * 输入：
+     * 2.499
      * 输出：
      * 2
+     * 说明：
+     * 0.499<0.5，2.499向下取整为2
      */
-    public static void test2() {
+    public static void test7() {
         Scanner in = new Scanner(System.in);
-        String s1 = in.nextLine().toLowerCase();
-        String s2 = in.nextLine().toLowerCase();
-        int lenBefore = s1.length();
-        int lenAfter = s1.replaceAll(s2, "").length();
-        System.out.print(lenBefore - lenAfter);
+        while (in.hasNext()) {
+            double d1 = in.nextDouble();
+            double d2 = d1-(int)d1;
+            if (d2 >= 0.5) {
+                System.out.println((int)Math.ceil(d1));
+            } else {
+                System.out.println((int)Math.floor(d1));
+            }
+        }
     }
 
     /**
@@ -94,37 +126,33 @@ public class NowCoderTest0_2 {
                 sb.append(i).append(" ").append(arr[i]).append("\n");
             }
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 
     /**
+     * HJ9 提取不重复的整数
+     * 输入一个 int型整数，按照从右向左的阅读顺序，返回一个不含重复数字的新的整数。
+     * 保证输入的整数最后一位不是 0 。
+     *
      * 输入：
-     * abc
+     * 9876673
      *
      * 输出：
-     * abc00000
+     * 37689
      * @throws Exception
      */
-    public static void test4() throws Exception {
+    public static void test9() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
         while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
-            }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
+            char[] chars = str.toCharArray();
+            boolean[] flags = new boolean[10];
+            for (int i = chars.length - 1; i >= 0; i--) {
+                int tempInt = chars[i] - 48;
+                if (!flags[tempInt]) {
+                    flags[tempInt] = true;
+                    System.out.print(tempInt);
                 }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
-                }
-                System.out.println(String.valueOf(tmp));
             }
         }
     }

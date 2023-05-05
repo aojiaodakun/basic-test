@@ -14,9 +14,9 @@ public class HwCombinationTest1 {
 
     public static void main(String[] args) throws Exception {
         HwCombinationTest1 my = new HwCombinationTest1();
-        my.test0();
+//        my.test0();
 //        my.test1();
-//        my.test2();
+        my.test2();
 
 
     }

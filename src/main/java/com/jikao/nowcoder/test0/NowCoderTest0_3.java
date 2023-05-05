@@ -1,6 +1,7 @@
 package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 import java.util.Arrays;
@@ -8,94 +9,91 @@ import java.util.Scanner;
 
 public class NowCoderTest0_3 {
 
-    // TODO 11,12,13,15
     public static void main(String[] args) throws Exception {
 //        test11();
 //        test12();
 //        test13();
-        test14();
-//        test15();
+//        test14();
+        test15();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
+     * HJ11 数字颠倒
+     * 输入描述：
+     * 输入一个int整数
+     *
+     * 输出描述：
+     * 将这个整数以字符串的形式逆序输出
+     *
+     * 输入：
+     * 1516000
+     *
+     * 输出：
+     * 0006151
      */
-    public static void test1() {
+    public static void test11() {
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
             String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
-        }
-    }
-
-    /**
-     * 输入：
-     * ABCabc
-     * A
-     * 输出：
-     * 2
-     */
-    public static void test2() {
-        Scanner in = new Scanner(System.in);
-        String s1 = in.nextLine().toLowerCase();
-        String s2 = in.nextLine().toLowerCase();
-        int lenBefore = s1.length();
-        int lenAfter = s1.replaceAll(s2, "").length();
-        System.out.print(lenBefore - lenAfter);
-    }
-
-    /**
-     * (1) HJ8.合并表记录
-     *数据表记录包含表索引index和数值value（int范围的正整数），请对表索引相同的记录进行合并，即将相同索引的数值进行求和运算，输出按照index值升序进行输出。
-     *
-     * 提示:
-     * 0 <= index <= 11111111
-     * 1 <= value <= 100000
-     *
-     * 输入描述：
-     * 先输入键值对的个数n（1 <= n <= 500）
-     * 接下来n行每行输入成对的index和value值，以空格隔开
-     *
-     * 输出描述：
-     * 输出合并后的键值对（多行）
-     *
-     * 输入：
-     * 4
-     * 0 1
-     * 0 2
-     * 1 2
-     * 3 4
-     *
-     * 输出：
-     * 0 3
-     * 1 2
-     * 3 4
-     */
-    public static void test8() throws Exception{
-        StreamTokenizer st = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
-        st.nextToken();      // 分隔符
-        int n = (int) st.nval;   // nextValue
-        int[] arr = new int[n];
-
-        for (int i = 0; i < n; i++) {
-            st.nextToken();
-            int key = (int) st.nval;
-            st.nextToken();
-            int value = (int) st.nval;
-            arr[key] = arr[key] + value;
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < arr.length ; i++) {
-            if(arr[i] != 0){
-                sb.append(i).append(" ").append(arr[i]).append("\n");
+            char[] chars = str.toCharArray();
+            for (int i = chars.length-1; i >= 0; i--) {
+                System.out.print(chars[i]);
             }
         }
-        System.out.println(sb.toString());
+    }
+
+    /**
+     * HJ12 字符串反转
+     * 描述
+     * 接受一个只包含小写字母的字符串，然后输出该字符串反转后的字符串。（字符串长度不超过1000）
+     *
+     * 输入描述：
+     * 输入一行，为一个只包含小写字母的字符串。
+     *
+     * 输出描述：
+     * 输出该字符串反转后的字符串。
+     *
+     * 输入：
+     * abcd
+     *
+     * 输出：
+     * dcba
+     */
+    public static void test12() {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNext()) {
+            String str = in.nextLine();
+            char[] chars = str.toCharArray();
+            for (int i = chars.length-1; i >= 0; i--) {
+                System.out.print(chars[i]);
+            }
+        }
+    }
+
+    /**
+     * HJ13 句子逆序
+     * 输入描述：
+     * 输入一个英文语句，每个单词用空格隔开。保证输入只包含空格和字母。
+     *
+     * 输出描述：
+     * 得到逆序的句子
+     *
+     * 输入：
+     * I am a boy
+     *
+     * 输出：
+     * boy a am I
+     * @throws Exception
+     */
+    public static void test13() throws Exception{
+        Scanner in = new Scanner(System.in);
+        while (in.hasNext()) {
+            String str = in.nextLine();
+            String[] strArray = str.split(" ");
+            for (int i = strArray.length-1; i >=0 ; i--) {
+                System.out.print(strArray[i] + " ");
+            }
+        }
     }
 
     /**
@@ -149,32 +147,44 @@ public class NowCoderTest0_3 {
     }
 
     /**
-     * HJ10 字符个数统计
+     * HJ15 求int型正整数在内存中存储时1的个数
+     * 描述
+     * 输入一个 int 型的正整数，计算出该 int 型数据在内存中存储时 1 的个数。
+     *
+     * 数据范围：保证在 32 位整型数字范围内
+     * 输入描述：
+     * 输入一个整数（int类型）
+     *
+     * 输出描述：
+     * 这个数转换成2进制后，输出1的个数
      *
      * 输入：
-     * abc
+     * 5
      * 输出：
-     * 3
+     * 2
      *
      * 输入：
-     * aaa
+     * 0
      * 输出：
-     * 1
+     * 0
+     *
      * @throws Exception
      */
-    public static void test10() throws Exception {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String line = bufferedReader.readLine();
-        int[] a = new int[128];
-        int count=0;
-        for(int i=0;i<line.length();i++){
-            char b = line.charAt(i);
-            if(a[b]==0){
+    public static void test15() throws Exception {
+        InputStream in = System.in;
+        int num;
+        byte[] bytes = new byte[1024];
+        while((num = in.read(bytes)) > 0){
+            String str = new String(bytes,0,num-1);
+            int num2 = Integer.parseInt(str);
+
+            int count = 0;
+            while(num2 != 0){
                 count++;
-                a[b]=1;
+                num2 = num2 & (num2 - 1);
             }
+            System.out.println(count);
         }
-        System.out.println(count);
     }
 
 }

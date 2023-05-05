@@ -14,8 +14,8 @@ public class HwDoublePointTest1 {
     public static void main(String[] args) throws Exception {
         HwDoublePointTest1 my = new HwDoublePointTest1();
 //        test1();
-//        my.test2();
-        my.test3();
+        my.test2();
+//        my.test3();
 //        test4();
     }
 
@@ -120,8 +120,8 @@ public class HwDoublePointTest1 {
     }
 
 
-    Map<Character, Integer> ori = new HashMap<Character, Integer>();
-    Map<Character, Integer> cnt = new HashMap<Character, Integer>();
+    Map<Character, Integer> ori = new HashMap<>();
+    Map<Character, Integer> cnt = new HashMap<>();
 
     /**
      * (3) NC76.最小覆盖子串
@@ -170,7 +170,7 @@ public class HwDoublePointTest1 {
     }
 
     public boolean check() {
-        Iterator iter = ori.entrySet().iterator();
+        Iterator<Map.Entry<Character, Integer>> iter = ori.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
             Character key = (Character) entry.getKey();
