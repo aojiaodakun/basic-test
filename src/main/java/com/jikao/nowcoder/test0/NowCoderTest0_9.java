@@ -2,6 +2,8 @@ package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Scanner;
 
 public class NowCoderTest0_9 {
@@ -17,7 +19,7 @@ public class NowCoderTest0_9 {
 
     /**
      * HJ41 称砝码
-     * 类型，重要，数量
+     * 类型，重量，数量
      *
      *输入：
      * 2
@@ -26,48 +28,34 @@ public class NowCoderTest0_9 {
      *
      * 输出：
      * 5
-     * 复制
+     *
      * 说明：
      * 可以表示出0，1，2，3，4五种重量。
      */
     public static void test41() throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        //输入处理
-        String str1 = br.readLine();
-        String str2 = br.readLine();
-        String str3 = br.readLine();
-        int n = Integer.parseInt(str1);
-        String[] strArr2 = str2.split(" ");
-        int[] weights = new int[n];
-        for (int i = 0; i < n; i++) {
-            weights[i] = Integer.parseInt(strArr2[i]);
-        }
-        String[] strArr3 = str3.split(" ");
-        int[] counts = new int[n];
-        for (int i = 0; i < n; i++) {
-            counts[i] = Integer.parseInt(strArr3[i]);
-        }
-        //数据组,200000为最大重量
-        boolean[] exist = new boolean[200000];  // 现有的可称量重量
-        int[] arr = new int[20000];  // i个砝码可以称量多少种重量
-        int count = 1;  // 现有的可称量重量计数
-
-        //循环所有重量
-        for (int i = 0; i < n; i++) {
-            //每个重量循环个数次
-            for (int j = 0; j < counts[i]; j++) {
-                //对现有总重量数组进行遍历(新增的元素在下次j循环中加入)
-                int index = count;
-                for (int k = 0; k < index; k++) {
-                    int sum = arr[k] + weights[i];
-                    if (!exist[sum]) {
-                        exist[sum] = true;
-                        arr[count++] = sum;
+        Scanner in = new Scanner(System.in);
+        while (in.hasNextInt()) {
+            HashSet<Integer> set = new HashSet<>();//存放所有可能的结果，不用担心重复问题
+            set.add(0);//初始化为0
+            int n = in.nextInt();//个数
+            int[] w = new int[n];
+            int[] nums = new int[n];
+            for(int i=0;i<n;i++){
+                w[i] = in.nextInt();//砝码的重量
+            }
+            for(int i=0;i<n;i++){
+                nums[i] = in.nextInt();//砝码个数
+            }
+            for(int i=0;i<n;i++){//遍历砝码
+                ArrayList<Integer> list = new ArrayList<>(set);//取当前所有的结果
+                for(int j=1;j<=nums[i];j++){//遍历个数
+                    for(int k=0;k<list.size();k++){
+                        set.add(list.get(k) + w[i] * j);
                     }
                 }
             }
+            System.out.println(set.size());
         }
-        System.out.println(count);
     }
 
     /**

@@ -194,7 +194,7 @@ public class NowCoderTest0_5 {
                 int num = 0;
                 StringBuilder index = new StringBuilder();
                 for (int j = 1; j < I.length; j++) {
-                    if (I[j].indexOf(pattern) != -1) {
+                    if (I[j].contains(pattern)) {
                         num++;
                         index.append(" ").append(j-1).append(" ").append(I[j]);
                     }

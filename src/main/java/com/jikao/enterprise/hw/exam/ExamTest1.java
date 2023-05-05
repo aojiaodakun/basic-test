@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 /**
  * 未理解
- * 4.1、NC52.括号序列
+ * 4.1、NC60.排队序列
  * 回溯
  * 5.1、*leetcode 面试题08.08.有重复字符串的排列组合
  * 5.2、leetcode 77.组合
@@ -16,7 +16,7 @@ import java.util.Scanner;
  * 6.2、NC17.最长回文子串
  * 6.3、NC28.最小覆盖子串
  *
- *
+ * 9.2、*HJ28.素数伴侣
  */
 public class ExamTest1 {
 
@@ -42,6 +42,7 @@ public class ExamTest1 {
                 blank = blank % 3 + water;
                 if (blank == 2) {
                     count++;
+                    break;
                 }
             }
             if (count > 0) {

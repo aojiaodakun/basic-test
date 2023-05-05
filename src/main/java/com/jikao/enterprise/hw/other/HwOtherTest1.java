@@ -73,7 +73,15 @@ public class HwOtherTest1 {
         System.out.println(result1);
     }
 
-    // dr,dc 配合使用得到 grid[r][c] 上grid[r-1][c]左grid[r][c-1]下grid[r+1][c]右grid[r][c+1]的元素
+    /**
+     * dr,dc配合使用得到
+     * grid[r][c]
+     * 上grid[r-1][c]
+     * 左grid[r][c-1]
+     * 下grid[r+1][c]
+     * 右grid[r][c+1]
+     * 的元素
+     */
     int[] dr = new int[]{-1, 0, 1, 0};
     int[] dc = new int[]{0, -1, 0, 1};
 
@@ -82,26 +90,27 @@ public class HwOtherTest1 {
         int R = grid.length, C = grid[0].length;
 
         // queue : all starting cells with rotten oranges
-        Queue<Integer> queue = new ArrayDeque();
-        Map<Integer, Integer> depth = new HashMap();
-        for (int r = 0; r < R; ++r)
-            for (int c = 0; c < C; ++c)
+        Queue<Integer> queue = new ArrayDeque<>();
+        Map<Integer, Integer> depth = new HashMap<>();
+        for (int r = 0; r < R; ++r){
+            for (int c = 0; c < C; ++c){
                 if (grid[r][c] == 2) {
                     int code = r * C + c;  // 转化为索引唯一的一维数组
                     queue.add(code); //存储腐烂橘子
                     depth.put(code, 0); //存储橘子变为腐烂时的时间,key为橘子的一维数组下标，value为变腐烂的时间
                 }
-
+            }
+        }
         int ans = 0;
         while (!queue.isEmpty()) {
             int code = queue.remove();
-            int r = code / C, c = code % C;
-            for (int k = 0; k < 4; ++k) {
+            int r = code / C, c = code % C;// 行列拆解
+            for (int k = 0; k < 4; ++k) {// 4个方向
                 int nr = r + dr[k];
                 int nc = c + dc[k];
                 if (0 <= nr && nr < R && 0 <= nc && nc < C && grid[nr][nc] == 1) {
                     grid[nr][nc] = 2;
-                    int ncode = nr * C + nc;
+                    int ncode = nr * C + nc;// 行列组装
                     queue.add(ncode);
                     // 计次的关键 元素 grid[r][c] 的上左下右元素得腐烂时间应该一致
                     depth.put(ncode, depth.get(code) + 1);
@@ -124,8 +133,8 @@ public class HwOtherTest1 {
      * @throws Exception
      */
     private void test5() throws Exception{
-//        System.out.println(countPrimes(100));
-        System.out.println(isPrime(100));
+        System.out.println(countPrimes(100));
+//        System.out.println(isPrime(100));
     }
 
     public int countPrimes(int n) {

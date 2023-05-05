@@ -1,6 +1,7 @@
 package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -181,16 +182,27 @@ public class NowCoderTest0_12 {
      * @throws Exception
      */
     public static void test60() throws Exception {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String str = "";
+        while((str = bf.readLine()) != null){
+            int num = Integer.parseInt(str.trim());
+            for(int m = num/2;num >= 2; m--){
+                if(isZhiShu(m) && isZhiShu(num - m)){
+                    System.out.println(m);
+                    System.out.println(num - m);
+                    break;
+                }
+            }
+        }
+
+    }
+
+    private static void my60() throws IOException {
         List<Integer> zhisuList = new ArrayList<>(512);
         // 1、先找出1000内的所有质数
         for (int i = 2; i <= 1000; i++) {
-            for (int j = 2; j <= i; j++) {
-                if(i % j == 0 && j != i) {
-                    break;
-                }
-                if (i == j) {
-                    zhisuList.add(i);
-                }
+            if (isZhiShu(i)) {
+                zhisuList.add(i);
             }
         }
         // 2、组成指定偶数的两个素数差值最小的素数对
@@ -222,7 +234,16 @@ public class NowCoderTest0_12 {
             System.out.println(num1);
             System.out.println(num2);
         }
-
     }
+
+    private static boolean isZhiShu(int num){
+        for(int n = 2; n < num;n++){
+            if(num % n == 0){
+                return false;
+            }
+        }
+        return true;
+    }
+
 
 }

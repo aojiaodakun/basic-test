@@ -16,20 +16,25 @@ public class HwTreeTest1 {
 
     /**
      * (1) *leetcode 剑指offer 32 — II.从上到下打印二叉树 II
+     * [
+     *   [3],
+     *   [9,20],
+     *   [15,7]
+     * ]
      */
     private static void test1() {
-        TreeNode rootNode = new TreeNode(1);
+        TreeNode rootNode = new TreeNode(3);
 
-        TreeNode node2 = new TreeNode(2);
-        TreeNode node5 = new TreeNode(5);
-        TreeNode node3 = new TreeNode(3);
-        TreeNode node4 = new TreeNode(4);
+        TreeNode node9 = new TreeNode(9);
+        TreeNode node20 = new TreeNode(20);
+        TreeNode node15 = new TreeNode(15);
+        TreeNode node7 = new TreeNode(7);
 
-        rootNode.left = node2;
-        rootNode.right = node5;
+        rootNode.left = node9;
+        rootNode.right = node20;
 
-        node2.left = node3;
-        node2.right = node4;
+        node20.left = node15;
+        node20.right = node7;
 
         List<List<Integer>> lists = levelOrder(rootNode);
         System.out.println(lists);
@@ -57,6 +62,11 @@ public class HwTreeTest1 {
 
     /**
      * (2) leetcode 剑指offer 32 — III.从上到下打印二叉树 III
+     * [
+     *   [3],
+     *   [20,9],
+     *   [15,7]
+     * ]
      */
     private static void test2() {
         TreeNode rootNode = new TreeNode(3);
@@ -64,15 +74,16 @@ public class HwTreeTest1 {
         TreeNode node9 = new TreeNode(9);
         TreeNode node20 = new TreeNode(20);
         TreeNode node15 = new TreeNode(15);
-        TreeNode node17 = new TreeNode(17);
+        TreeNode node7 = new TreeNode(7);
 
         rootNode.left = node9;
         rootNode.right = node20;
 
         node20.left = node15;
-        node20.right = node17;
+        node20.right = node7;
 
-        levelOrder2(rootNode);
+        List<List<Integer>> lists = levelOrder2(rootNode);
+        System.out.println(lists);
     }
 
     public static List<List<Integer>> levelOrder2(TreeNode root) {

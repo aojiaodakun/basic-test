@@ -9,14 +9,58 @@ import java.util.*;
  */
 public class HwCombinationTest1 {
 
+    List<String> list0 = new ArrayList<>();
     List<String> list1 = new LinkedList<>();
 
     public static void main(String[] args) throws Exception {
-//        new HwCombinationTest1().test1();
-        new HwCombinationTest1().test2();
+        HwCombinationTest1 my = new HwCombinationTest1();
+        my.test0();
+//        my.test1();
+//        my.test2();
 
 
     }
+
+    /**
+     * 面试题 08.07. 无重复字符串的排列组合
+     *
+     *  输入：S = "qwe"
+     *  输出：["qwe", "qew", "wqe", "weq", "ewq", "eqw"]
+     *
+     *  输入：S = "ab"
+     *  输出：["ab", "ba"]
+     *
+     * @throws Exception
+     */
+    private void test0() throws Exception{
+        String[] result = permutation0("qwe");
+        for (int i = 0; i < result.length; i++) {
+            System.out.println(result[i]);
+        }
+    }
+
+    public String[] permutation0(String str) {
+        permutate0(str.toCharArray(), 0);
+        String[] res = new String[list0.size()];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = list0.get(i);
+        }
+        return res;
+    }
+
+    public void permutate0(char[] arr, int first) {
+        if (first == arr.length - 1) {
+            list0.add(new String(arr));
+            return;
+        }
+        for (int i = first; i < arr.length; i++) {
+            swap(arr, first, i);
+            permutate0(arr, first + 1);
+            swap(arr, first, i);
+        }
+    }
+
+
 
     /**
      * (1) *leetcode 面试题08.08.有重复字符串的排列组合
