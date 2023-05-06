@@ -3,104 +3,116 @@ package com.jikao.nowcoder.test0;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * 未理解
+ * 24
+ */
 public class NowCoderTest0_5 {
 
-    // TODO 21,22,24
     public static void main(String[] args) throws Exception {
 //        test21();
 //        test22();
 //        test23();
-//        test24();
-        test25();
+        test24();
+//        test25();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
+     * HJ21 简单密码
+     *
+     * 输入：
+     * YUANzhi1987
+     *
+     * 输出：
+     * zvbo9441987
      */
-    public static void test1() {
+    public static void test21() {
+        Map<Character, Integer> map = new HashMap() {
+            {
+                put('a', 2);
+                put('b', 2);
+                put('c', 2);
+                put('d', 3);
+                put('e', 3);
+                put('f', 3);
+                put('g', 4);
+                put('h', 4);
+                put('i', 4);
+                put('j', 5);
+                put('k', 5);
+                put('l', 5);
+                put('m', 6);
+                put('n', 6);
+                put('o', 6);
+                put('p', 7);
+                put('q', 7);
+                put('r', 7);
+                put('s', 7);
+                put('t', 8);
+                put('u', 8);
+                put('v', 8);
+                put('w', 9);
+                put('x', 9);
+                put('y', 9);
+                put('z', 9);
+            }
+        };
+
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
             String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
-        }
-    }
-
-    /**
-     * (1) HJ17.坐标移动
-     * A10;S20;W10;D30;X;A1A;B10A11;;A10;
-     * 处理过程：
-     * 起点（0,0）
-     * +A10=  （-10,0）
-     * +S20=  (-10,-20)
-     * +W10=  (-10,-10)
-     * +D30=  (20,-10)
-     * +x =  无效
-     * +A1A=  无效
-     * +B10A11 =  无效
-     * +一个空 不影响
-     * + A10  =  (10,-10)
-     * 结果 （10， -10）
-     *
-     *
-     * A10;S20;W10;D30;X;A1A;B10A11;;A10;
-     * 10,-10
-     *
-     * ABC;AKL;DA1;
-     * 0,0
-     */
-    public static void test17() throws Exception{
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String line = bufferedReader.readLine();
-        String move1 = move(line);
-        System.out.println(move1);
-    }
-
-    /**
-     * 输入：
-     * A10;S20;W10;D30;X;A1A;B10A11;;A10;
-     * 输出：
-     * 10,-10
-     * @param string
-     * @return
-     */
-    private static String move(String string) {
-        int x = 0;
-        int y = 0;
-        String[] tempArray = string.split(";");
-        for(String tempString : tempArray) {
-            if (!tempString.equals("") && tempString.length() == 3) {
-                String position = tempString.substring(0, 1);
-                int number;
-                try {
-                    number = Integer.parseInt(tempString.substring(1, 3));
-                } catch (NumberFormatException e) {
-                    continue;
-                }
-                switch (position) {
-                    case "A":
-                        x = x - number;
-                        break;
-                    case "S":
-                        y = y - number;
-                        break;
-                    case "W":
-                        y = y + number;
-                        break;
-                    case "D":
-                        x = x + number;
-                        break;
-                    default:
-                        break;
+            StringBuilder sb = new StringBuilder();
+            char[] charArray = str.toCharArray();
+            for (int i = 0; i < charArray.length; i++) {
+                char c = charArray[i];
+                // 大写
+                if (c >= 65 && c < 97) {
+                    char newC;
+                    if (c == 90) {
+                        newC = 97;
+                    } else {
+                        newC = (char)((int)c +33);
+                    }
+                    sb.append(newC);
+                } else if(c >=97) {
+                    // 小写
+                    sb.append(map.get(c));
+                } else {
+                    sb.append(c);
                 }
             }
+            System.out.println(sb);
         }
-        return x + "," + y;
+    }
+
+    /**
+     * HJ22 汽水瓶
+     * @throws Exception
+     */
+    public static void test22() throws Exception{
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNextInt()) {
+            int count = 0;
+            int blank = in.nextInt();
+
+            while (blank > 2) {
+                int water = blank / 3;
+                count += water;
+                blank = blank % 3 + water;
+                if (blank == 2) {
+                    count++;
+                    break;
+                }
+            }
+            if (count > 0) {
+                System.out.println(count);
+            }
+        }
     }
 
 
@@ -140,34 +152,78 @@ public class NowCoderTest0_5 {
     }
 
     /**
+     * HJ24 合唱队
      * 输入：
-     * abc
+     * 8
+     * 186 186 150 200 160 130 197 200
      *
      * 输出：
-     * abc00000
+     * 4
+     *
+     * 说明：
+     * 由于不允许改变队列元素的先后顺序，所以最终剩下的队列应该为186 200 160 130或150 200 160 130
      * @throws Exception
      */
-    public static void test4() throws Exception {
+    public static void test24() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-        while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
+        String str = null;
+        while ((str = br.readLine()) != null) {
+            if (str.equals("")) continue;
+            int n = Integer.parseInt(str);
+            int[] heights = new int[n];
+            String[] str_heights = br.readLine().split(" ");
+            // 当仅有一个人时，其自己组成一个合唱队，出列0人
+            if (n <= 1) {
+                System.out.println(0);
+                continue;
             }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
+            for (int i = 0; i < n; i++) heights[i] = Integer.parseInt(str_heights[i]);
+            // 记录从左向右的最长递增子序列和从右向左的最长递增子序列
+            int[] seq = new int[n], rev_seq = new int[n];
+            int[] k = new int[n];  // 用于记录以i为终点的从左向右和从右向走的子序列元素个数
+            seq[0] = heights[0];  // 初始化从左向右子序列首元素为第一个元素
+            int index = 1; // 记录当前子序列的长度
+            for (int i = 1; i < n; i++) {
+                if (heights[i] > seq[index-1]) {  // 当当前元素大于递增序列最后一个元素时
+                    k[i] = index;  // 其左边元素个数
+                    seq[index++] = heights[i];  // 更新递增序列
+                } else {  // 当当前元素位于目前维护递增序列之间时
+                    // 使用二分搜索找到其所属位置
+                    int l = 0, r = index - 1;
+                    while (l < r) {
+                        int mid = l + (r - l) / 2;
+                        if (seq[mid] < heights[i]) l = mid + 1;
+                        else r = mid;
+                    }
+                    seq[l] = heights[i];  // 将所属位置值进行替换
+                    k[i] = l;  // 其左边元素个数
                 }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
-                }
-                System.out.println(String.valueOf(tmp));
             }
+
+            // 随后，再从右向左进行上述操作
+            rev_seq[0] = heights[n-1];
+            index = 1;
+            for (int i = n - 2; i >= 0; i--) {
+                if (heights[i] > rev_seq[index-1]) {
+                    k[i] += index;
+                    rev_seq[index++] = heights[i];
+                } else {
+                    int l = 0, r = index - 1;
+                    while (l < r) {
+                        int mid = l + (r - l) / 2;
+                        if (rev_seq[mid] < heights[i]) l = mid + 1;
+                        else r = mid;
+                    }
+                    rev_seq[l] = heights[i];
+                    k[i] += l;
+                }
+            }
+
+            int max = 1;
+            for (int num: k)
+                if (max < num) max = num;
+            // max+1为最大的k
+            System.out.println(n - max - 1);
         }
     }
 

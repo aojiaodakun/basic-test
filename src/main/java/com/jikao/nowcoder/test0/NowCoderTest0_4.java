@@ -2,32 +2,99 @@ package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.LinkedHashMap;
 import java.util.Scanner;
 
+/**
+ * 未理解
+ * 16，18
+ */
 public class NowCoderTest0_4 {
 
-    // TODO 16,18,19
     public static void main(String[] args) throws Exception {
 //        test16();
 //        test17();
 //        test18();
-//        test19();
-        test20();
+        test19();
+//        test20();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
+     * HJ16 购物单
+     * 输入：
+     * 1000 5
+     * 800 2 0
+     * 400 5 1
+     * 300 5 1
+     * 400 3 0
+     * 500 2 0
+     *
+     * 输出：
+     * 2200
      */
-    public static void test1() {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-            String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
+    public static void test16() throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+
+        String[] money_number = str.split(" ");
+        int money = Integer.parseInt(money_number[0]);//钱数
+        int count = Integer.parseInt(money_number[1]);//物品数
+        int v[] = new int[count + 1];//物品的v p q和附件序号
+        int p[] = new int[count + 1];
+        int q[] = new int[count + 1];
+        int sub1[] = new int[count + 1];
+        int sub2[] = new int[count + 1];
+        int dw = 100;// 单位
+        boolean flag = true;
+        for (int i = 1; i < count + 1; i++) {//第i件物品的属性
+            String obj[] = br.readLine().split(" ");
+            v[i] = Integer.parseInt(obj[0]);
+            if (flag && v[i] % dw != 0) {
+                dw = 10;
+                flag = false;
+                for (int m = 1; m < i; m++) {//出现不是整百的，按整十除
+                    v[m] *= 10;
+                    p[m] *= 10;
+                }
+            }
+            v[i] = v[i] / dw;
+            p[i] = Integer.parseInt(obj[1]) * v[i];//价值=价格*权重，需要的是p最大
+            q[i] = Integer.parseInt(obj[2]);
+            if (q[i] > 0) {//是附件
+                if (sub1[q[i]] == 0)
+                    sub1[q[i]] = i;//是附件1
+                else
+                    sub2[q[i]] = i;//是附件2
+            }
         }
+        money /= dw;
+        int dp[][] = new int[count + 1][money + 1];//money为啥+1？
+        for (int i = 1; i < count + 1; i++) {//两层for循环，动态规划二维表逐列逐行
+            int p1 = 0, p2 = 0, p3 = 0;//根据附件数量，分4种情况v[i]、v1、v2、v3
+            int v1 = -1, v2 = -1, v3 = -1;//
+            if (sub1[i] != 0) {
+                v1 = v[i] + v[sub1[i]];
+                p1 = p[i] + p[sub1[i]];
+            }
+            if (sub2[i] != 0) {
+                v2 = v[i] + v[sub2[i]];
+                p2 = p[i] + p[sub2[i]];
+            }
+            if (sub1[i] != 0 && sub2[i] != 0) {
+                v3 = v1 + v2 - v[i];
+                p3 = p1 + p2 - p[i];
+            }
+            for (int j = 1; j < money + 1; j++) {
+                dp[i][j] = dp[i - 1][j];//最大价值最少是这一件不放进去的大小
+                if (q[i] == 0) {
+                    if (j >= v[i]) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v[i]] + p[i]);
+                    if (v1 != -1 && j >= v1) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v1] + p1);
+                    if (v2 != -1 && j >= v2) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v2] + p2);
+                    if (v3 != -1 && j >= v3) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v3] + p3);
+                }
+            }
+        }
+        System.out.println(dp[count][money] * dw);
     }
 
     /**
@@ -104,66 +171,81 @@ public class NowCoderTest0_4 {
 
 
     /**
-     * 输入：
-     * 3
-     * 2
-     * 2
-     * 1
+     * HJ18 识别有效的IP地址和掩码并进行分类统计
      *
-     * 输出：
-     * 1
-     * 2
+     * @throws Exception
      */
-    public static void test3() throws Exception {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+    public static void test18() throws Exception {
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
         String str;
-        while ((str = bf.readLine()) != null) {
-            boolean[] flagArrays = new boolean[1001];
-            StringBuilder sb = new StringBuilder();
-            int n = Integer.parseInt(str);
-            for (int i = 0; i < n; i++){
-                flagArrays[Integer.parseInt(bf.readLine())] = true;
+        int a=0,b=0,c=0,d=0,e=0,err=0,pri=0;
+        while((str=buffer.readLine())!=null){
+            int index=str.indexOf('~');
+            long num1=strToInt(str.substring(0,index));
+            long num2=strToInt(str.substring(index+1));
+            long t=num1>>24;
+            if(t==0||t==127) continue;
+            if(num2<=0||num2>=0XFFFFFFFFL||(((num2 ^ 0XFFFFFFFFL)+1)|num2)!=num2){
+                err++;
+                continue;
             }
-
-            for (int i = 0; i < 1001; i++){
-                if (flagArrays[i]) {
-                    sb.append(i).append("\n");
-                }
-            }
-
-            sb.deleteCharAt(sb.length() - 1);
-            System.out.println(sb);
+            if(t<=0)err++;
+            else if(t>=1&&t<=126){
+                a++;
+                if(t==10) pri++;
+            }else if(t>=128&&t<=191){
+                b++;
+                if(num1>>20==0xAC1)pri++;
+            }else if(t>=192&&t<=223){
+                c++;
+                if(num1>>16==0xC0A8)pri++;
+            }else if(t>=224&&t<=239)d++;
+            else if(t>=240&&t<=255)e++;
         }
+        System.out.println(a+" "+b+" "+c+" "+d+" "+e+" "+err+" "+pri);
+    }
+
+    public static long strToInt(String str){
+        char[] cs=str.toCharArray();
+        long res=0,tmp=0,flag=0;
+        for(char c:cs){
+            if(c=='.'){
+                res=res<<8|tmp;
+                tmp=0;
+                flag++;
+            }
+            else if(c>='0'&&c<='9'){
+                tmp=tmp*10+c-'0';
+                flag=0;
+            }else{
+                return -1;
+            }
+            if(flag>=2) return -1;
+
+        }
+        res=res<<8|tmp;
+        return res;
     }
 
     /**
-     * 输入：
-     * abc
-     *
-     * 输出：
-     * abc00000
+     * HJ19 简单错误记录
      * @throws Exception
      */
-    public static void test4() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void test19() throws Exception {
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
         String str;
-        while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
-            }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
-                }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
-                }
-                System.out.println(String.valueOf(tmp));
+        LinkedHashMap<String,Integer> data = new LinkedHashMap<>();
+        while((str = buffer.readLine())!=null){
+            int idx1 = str.lastIndexOf(" ");
+            int idx2 = str.lastIndexOf("\\");
+            String key = (idx1-idx2)>16?str.substring(idx1-16):str.substring(idx2+1);
+            data.put(key,data.getOrDefault(key,0)+1);
+        }
+        int count=0;
+        for (String key:data.keySet()){
+            count++;
+            if(count>(data.size()-8)){
+                System.out.println(key+" "+data.get(key));
             }
         }
     }

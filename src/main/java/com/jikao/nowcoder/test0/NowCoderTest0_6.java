@@ -15,26 +15,24 @@ public class NowCoderTest0_6 {
 
     // TODO 26,29,30
     public static void main(String[] args) throws Exception {
-//        test26();
+        test26();
 //        test27();
-        test28();
+//        test28();
 //        test29();
 //        test30();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
+     * HJ26 字符串排序
+     *
+     * 输入：
+     * A Famous Saying: Much Ado About Nothing (2012/8).
+     *
+     * 输出：
+     * A aaAAbc dFgghh: iimM nNn oooos Sttuuuy (2012/8).
      */
-    public static void test1() {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-            String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
-        }
+    public static void test26() {
+
     }
 
     /**
