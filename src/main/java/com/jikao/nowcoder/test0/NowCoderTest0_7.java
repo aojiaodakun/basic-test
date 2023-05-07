@@ -1,33 +1,84 @@
 package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * 未理解
+ * 32、动态规划，中心扩散
+ */
 public class NowCoderTest0_7 {
 
-    // TODO 31,32,34,35
     public static void main(String[] args) throws Exception {
 //        test31();
 //        test32();
-        test33();
+//        test33();
 //        test34();
-//        test35();
+        test35();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
+     * HJ31 单词倒排
+     * @throws Exception
      */
-    public static void test1() {
-        Scanner in = new Scanner(System.in);
-        while (in.hasNext()) {
-            String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
+    public static void test31() throws Exception{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        while ((line = br.readLine()) != null && line.length() > 0) {
+            char[] array = line.trim().toCharArray();
+            StringBuilder sb = new StringBuilder();
+            boolean flag = false;
+            int mark = -1;
+            for (int i = array.length - 1; i >= 0; i--) {
+                if ((array[i] >= 'A' && array[i] <= 'Z') || (array[i] >= 'a' && array[i] <= 'z')) {
+                    if (mark == -1)
+                        mark = i;
+                    flag = true;
+                } else if (flag) {
+                    sb.append(array, i + 1, mark - i).append(' ');
+                    mark = -1;
+                    flag = false;
+                }
+            }
+            if (flag) {
+                sb.append(array, 0, mark + 1);
+                System.out.println(sb);
+            } else {
+                System.out.println(sb.substring(0, sb.length() - 1));
+            }
         }
+    }
+
+    /**
+     * HJ32 密码截取
+     * @throws Exception
+     */
+    public static void test32() throws Exception{
+        BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
+        String str;
+        //中心扩散法
+        while((str=bf.readLine())!=null){
+            int max=0;
+            for(int i=0;i<str.length()-1;i++){
+                //ABA型
+                int len1=longest(str,i,i);
+                //ABBA型
+                int len2=longest(str,i,i+1);
+                max=Math.max(max,len1>len2?len1:len2);
+            }
+            System.out.println(max);
+        }
+    }
+
+    private static int longest(String str,int i,int j){
+        while(j<str.length()&&i>=0 && str.charAt(i)==str.charAt(j)){
+            i--;
+            j++;
+        }
+        return j-i-1;
     }
 
     /**
@@ -69,8 +120,6 @@ public class NowCoderTest0_7 {
     }
 
 
-
-
     /**
      * 输入：
      * aabcddd
@@ -107,115 +156,47 @@ public class NowCoderTest0_7 {
     }
 
     /**
-     * 输入：
-     * abc
-     *
-     * 输出：
-     * abc00000
+     * HJ34 图片整理
      * @throws Exception
      */
-    public static void test4() throws Exception {
+    public static void test34() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
         while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
-            }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
-                }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
-                }
-                System.out.println(String.valueOf(tmp));
-            }
+            char[] charArray = str.toCharArray();
+            Arrays.sort(charArray);
+            System.out.println(new String(charArray));
         }
     }
 
     /**
-     * (2) HJ20.密码验证合格程序
-     *
-     * 密码要求:
-     * 1.长度超过8位
-     * 2.包括大小写字母.数字.其它符号,以上四种至少三种
-     * 3.不能有长度大于2的包含公共元素的子串重复 （注：其他符号不含空格或换行）
-     *
-     * 数据范围：输入的字符串长度满足
-     * 1≤n≤100
-     *
-     * 输入：
-     * 021Abc9000
-     * 021Abc9Abc1
-     * 021ABC9000
-     * 021$bc9000
-     *
-     * 输出：
-     * OK
-     * NG
-     * NG
-     * OK
+     * HJ35 蛇形矩阵
      * @throws Exception
      */
-    public static void test20() throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String input = null;
-        StringBuffer sb = new StringBuffer();
-        while (null != (input = reader.readLine())) {
-            //设置四种类型数据初始为空即false，有数据了就更改为true
-            boolean[] flag = new boolean[4];
-            char[] chars = input.toCharArray();
-
-            // 第一个条件
-            if (chars.length < 9) {
-                sb.append("NG").append("\n");
-                continue;
-            }
-
-            // 第二个条件
-            for (int i = 0; i < chars.length; i++) {
-                if ('A' <= chars[i] && chars[i] <= 'Z') {
-                    flag[0] = true;
-                } else if ('a' <= chars[i] && chars[i] <= 'z') {
-                    flag[1] = true;
-                } else if ('0' <= chars[i] && chars[i] <= '9') {
-                    flag[2] = true;
-                } else {
-                    flag[3] = true;
-                }
-            }
-            int count = 0;
-            for (int i = 0; i < 4; i++) {
-                if (flag[i]) {
-                    count++;
-                }
-            }
-
-            // 第三个条件
-            //不存在两个大于2的子串相同，即！（i=i+3,i+1=i+4,i+2=i+5）
-            boolean sign = true;
-            for (int i = 0; i < chars.length - 5; i++) {
-                for (int j = i + 3; j < chars.length - 2; j++) {
-                    if (chars[i] == chars[j] &&
-                            chars[i + 1] == chars[j + 1] &&
-                            chars[i + 2] == chars[j + 2]) {
-                        sign = false;
+    public static void test35() throws Exception {
+        Scanner in = new Scanner(System.in);
+        // 注意 hasNext 和 hasNextLine 的区别
+        while (in.hasNext()) { // 注意 while 处理多个 case
+            int size = in.nextInt();
+            int[][] array = new int[size][size];
+            array[0][0] = 1;
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < size - i; j++) {
+                    if (j == 0 && i > 0) {
+                        array[i][j] = array[i-1][j] + i;
+                    } else if(j > 0){
+                        array[i][j] = array[i][j-1] + (i+j+1);
                     }
                 }
             }
-
-            if (count >= 3 && sign) {
-                sb.append("OK").append("\n");
-            } else {
-                sb.append("NG").append("\n");
+            for (int i = 0; i < array.length; i++) {
+                for (int j = 0; j < size - i; j++) {
+                    System.out.print(array[i][j] + " ");
+                }
+                System.out.println();
             }
         }
-        System.out.println(sb);
+
 
     }
 

@@ -1,6 +1,7 @@
 package com.jikao.nowcoder.test0;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,13 +14,12 @@ import java.util.Set;
 
 public class NowCoderTest0_6 {
 
-    // TODO 26,29,30
     public static void main(String[] args) throws Exception {
-        test26();
+//        test26();
 //        test27();
 //        test28();
 //        test29();
-//        test30();
+        test30();
     }
 
     /**
@@ -31,8 +31,39 @@ public class NowCoderTest0_6 {
      * 输出：
      * A aaAAbc dFgghh: iimM nNn oooos Sttuuuy (2012/8).
      */
-    public static void test26() {
-
+    public static void test26() throws Exception{
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String str;
+        while((str = bf.readLine())!=null){
+            char[] charArray = str.toCharArray();
+            char[] resultArray = Arrays.copyOf(charArray, charArray.length);
+            boolean[] flag = new boolean[charArray.length];
+            int index = 0;
+            for (int i = 65; i < 91; i++) {
+                for (int j = 0; j < charArray.length; j++) {
+                    if (flag[j]) {
+                        continue;
+                    }
+                    char c = charArray[j];
+                    int cInt = c;
+                    // 空格
+                    if (cInt == 32) {
+                        flag[j] = true;
+                        continue;
+                    }
+                    if ((cInt == i || cInt ==i+32)) {
+                        flag[j] = true;
+                        while (!((resultArray[index] >=65 && resultArray[index] < 91) ||
+                                (resultArray[index] >=97 && resultArray[index] < 123))) {
+                            index++;
+                        }
+                        resultArray[index] = c;
+                        index++;
+                    }
+                }
+            }
+            System.out.println(new String(resultArray));
+        }
     }
 
     /**
@@ -196,116 +227,153 @@ public class NowCoderTest0_6 {
     }
 
     /**
-     * 输入：
-     * abc
+     * HJ29 字符串加解密
      *
-     * 输出：
-     * abc00000
      * @throws Exception
      */
-    public static void test4() throws Exception {
+    public static void test29() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-        while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
+        String str1 = br.readLine();
+        String str2 = br.readLine();
+
+        StringBuilder sb1 = new StringBuilder();
+        char[] charArray1 = str1.toCharArray();
+        for (int i = 0; i < charArray1.length; i++) {
+            char tempC = charArray1[i];
+            char c;
+            if (tempC>=48 && tempC < 58){
+                c = numberCode(tempC, true);
+            } else {
+                c = zimuCode(tempC, true);
             }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
-                }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
-                }
-                System.out.println(String.valueOf(tmp));
+            sb1.append(c);
+        }
+
+        StringBuilder sb2 = new StringBuilder();
+        char[] charArray2 = str2.toCharArray();
+        for (int i = 0; i < charArray2.length; i++) {
+            char tempC = charArray2[i];
+            char c;
+            if (tempC>=48 && tempC < 58){
+                c = numberCode(tempC, false);
+            } else {
+                c = zimuCode(tempC, false);
             }
+            sb2.append(c);
+        }
+
+        System.out.println(sb1);
+        System.out.println(sb2);
+    }
+
+    private static char zimuCode(char c, boolean encode) {
+        // 大写字母
+        if (c >=65 && c<91) {
+            if (encode) {
+                if (c == 'Z') {
+                    return 'a';
+                }
+                return (char)(c+33);
+            } else {
+                if (c == 'A') {
+                    return 'z';
+                }
+                return (char)(c+31);
+            }
+        } else if(c >=97 && c<123) {
+            // 小写字母
+            if (encode) {
+                if (c == 'z') {
+                    return 'A';
+                }
+                return (char)(c-31);
+            } else {
+                if (c == 'a') {
+                    return 'Z';
+                }
+                return (char)(c-33);
+            }
+        }
+        return 'a';
+    }
+
+    private static char numberCode(char c, boolean encode) {
+        int cInt = c;
+        if (encode) {
+            if (cInt == 57) {
+                return 48;
+            }
+            cInt++;
+            return (char)cInt;
+        } else {
+            if (cInt == 48) {
+                return 57;
+            }
+            cInt--;
+            return (char)cInt;
         }
     }
 
     /**
-     * (2) HJ20.密码验证合格程序
-     *
-     * 密码要求:
-     * 1.长度超过8位
-     * 2.包括大小写字母.数字.其它符号,以上四种至少三种
-     * 3.不能有长度大于2的包含公共元素的子串重复 （注：其他符号不含空格或换行）
-     *
-     * 数据范围：输入的字符串长度满足
-     * 1≤n≤100
-     *
-     * 输入：
-     * 021Abc9000
-     * 021Abc9Abc1
-     * 021ABC9000
-     * 021$bc9000
-     *
-     * 输出：
-     * OK
-     * NG
-     * NG
-     * OK
+     * HJ30 字符串合并处理
      * @throws Exception
      */
-    public static void test20() throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String input = null;
-        StringBuffer sb = new StringBuffer();
-        while (null != (input = reader.readLine())) {
-            //设置四种类型数据初始为空即false，有数据了就更改为true
-            boolean[] flag = new boolean[4];
-            char[] chars = input.toCharArray();
+    public static void test30() throws Exception {
+        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
+        String s = null;
+        while((s = bf.readLine())!=null){
+            String[] str = s.split(" ");
+            s = str[0] + str[1];
+            char[] array = sort(s);
+            System.out.println(transform(array));
+        }
+    }
 
-            // 第一个条件
-            if (chars.length < 9) {
-                sb.append("NG").append("\n");
-                continue;
-            }
-
-            // 第二个条件
-            for (int i = 0; i < chars.length; i++) {
-                if ('A' <= chars[i] && chars[i] <= 'Z') {
-                    flag[0] = true;
-                } else if ('a' <= chars[i] && chars[i] <= 'z') {
-                    flag[1] = true;
-                } else if ('0' <= chars[i] && chars[i] <= '9') {
-                    flag[2] = true;
-                } else {
-                    flag[3] = true;
+    public static char[] sort(String s){
+        char[] array = s.toCharArray();
+        int i,j;
+        for(i=2;i<array.length;i+=2){
+            if(array[i] < array[i-2]){
+                char tmp = array[i];
+                for(j=i;j>0 && array[j-2] > tmp; j-=2){
+                    array[j] = array[j-2];
                 }
-            }
-            int count = 0;
-            for (int i = 0; i < 4; i++) {
-                if (flag[i]) {
-                    count++;
-                }
-            }
-
-            // 第三个条件
-            //不存在两个大于2的子串相同，即！（i=i+3,i+1=i+4,i+2=i+5）
-            boolean sign = true;
-            for (int i = 0; i < chars.length - 5; i++) {
-                for (int j = i + 3; j < chars.length - 2; j++) {
-                    if (chars[i] == chars[j] &&
-                            chars[i + 1] == chars[j + 1] &&
-                            chars[i + 2] == chars[j + 2]) {
-                        sign = false;
-                    }
-                }
-            }
-
-            if (count >= 3 && sign) {
-                sb.append("OK").append("\n");
-            } else {
-                sb.append("NG").append("\n");
+                array[j] = tmp;
             }
         }
-        System.out.println(sb);
+        for(i=3;i<array.length;i+=2){
+            if(array[i] < array[i-2]){
+                char tmp = array[i];
+                for(j=i;j>1 && array[j-2]>tmp;j-=2){
+                    array[j] = array[j-2];
+                }
+                array[j] = tmp;
+            }
+        }
+        return array;
+    }
 
+    public static String transform(char[] array){
+        for(int i=0;i<array.length;i++){
+            int num = -1;
+            if(array[i] >= 'A' && array[i] <= 'F'){
+                num = array[i]-'A'+10;
+            }else if(array[i] >= 'a' && array[i] <= 'f'){
+                num = array[i]-'a'+10;
+            }else if(array[i] >= '0' && array[i] <= '9'){
+                num = array[i]-'0';
+            }
+
+            if(num != -1){ // 需要转换
+                num = (num&1)*8 + (num&2)*2 + (num&4)/2 + (num&8)/8;
+                if(num<10){
+                    array[i] = (char)(num+'0');
+                }else if(num<16){
+                    array[i] = (char)(num-10+'A');
+                }
+            }
+        }
+        return new String(array);
     }
 
 }
