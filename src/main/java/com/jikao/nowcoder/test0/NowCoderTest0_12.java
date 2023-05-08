@@ -13,66 +13,80 @@ import java.util.Set;
 
 public class NowCoderTest0_12 {
 
-    // TODO 56,57,58,59
+    // TODO 58,59
     public static void main(String[] args) throws Exception {
-//        test66();
-//        test67();
-//        test68();
-//        test69();
-        test60();
+//        test56();
+        test57();
+//        test58();
+//        test59();
+//        test60();
     }
 
     /**
-     * hello nowcoder
-     * <p>
-     * 8
+     * HJ56 完全数计算
      */
-    public static void test1() {
+    public static void test56() {
         Scanner in = new Scanner(System.in);
         while (in.hasNext()) {
-            String str = in.nextLine();
-            String[] tempArray = str.split(" ");
-            int length = tempArray[tempArray.length - 1].length();
-            System.out.println(length);
+            int inputInt = in.nextInt();
+            System.out.println(count(inputInt));
         }
     }
 
+    public static int conut2(int n){
+        if(n<6){
+            return 0;
+        } else if(n<28){
+            return 1;
+        }else if(n<496){
+            return 2;
+        } else if(n<8128){
+            return 3;
+        } else if(n<33550336){
+            return 4;
+        } else {
+            return -1;
+        }
+    }
+
+    public static int count(int n){
+        int result = 0;
+        for(int i =1;i<n;i++){
+            int sum = 0;
+            for(int j=1;j<=i/2;j++){
+                if(i%j==0){
+                    sum += j;
+                }
+            }
+            if(sum == i){
+                result ++;
+            }
+        }
+        return result;
+    }
+
     /**
-     *HJ33 整数与IP地址间的转换
-     * 输入描述：
-     * 输入
-     * 1 输入IP地址
-     * 2 输入10进制型的IP地址
-     *
-     * 输出描述：
-     * 输出
-     * 1 输出转换成10进制的IP地址
-     * 2 输出转换后的IP地址
-     *
-     * 输入：
-     * 10.0.3.193
-     * 167969729
-     *
-     * 输出：
-     * 167773121
-     * 10.3.3.193
+     * HJ57 高精度整数加法
      * @throws Exception
      */
-    public static void test2() throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = null;
-        while ((str = br.readLine()) != null) {
-            String[] ip = str.split("\\.");
-            long num = Long.parseLong(br.readLine());
-            //转10进制
-            System.out.println(Long.parseLong(ip[0]) << 24 | Long.parseLong(ip[1]) << 16 |
-                    Long.parseLong(ip[2]) << 8 | Long.parseLong(ip[3]));
-            //转ip地址
-            StringBuilder sb = new StringBuilder();
-            sb.append(((num >> 24) & 255)).append(".").append(((num >> 16) & 255))
-                    .append(".").append(((num >> 8) & 255)).append(".").append((num & 255));
-            System.out.println(sb.toString());
+    public static void test57() throws Exception{
+        Scanner in = new Scanner(System.in);
+        String str1 = in.nextLine();
+        char[] charArray1 = str1.toCharArray();
+        int length1 = charArray1.length;
+        String str2 = in.nextLine();
+        char[] charArray2 = str2.toCharArray();
+        int length2 = charArray2.length;
+
+        if (length1 < 8 && length2 < 8) {
+            System.out.println(Long.parseLong(str1) + Long.parseLong(str2));
+            return;
         }
+
+        List<String> list = new ArrayList<>();
+
+
+
     }
 
 
