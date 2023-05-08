@@ -3,22 +3,20 @@ package com.jikao.nowcoder.test0;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
+/**
+ * TODO
+ * 57
+ */
 public class NowCoderTest0_12 {
 
-    // TODO 58,59
+
     public static void main(String[] args) throws Exception {
 //        test56();
-        test57();
+//        test57();
 //        test58();
-//        test59();
+        test59();
 //        test60();
     }
 
@@ -70,102 +68,131 @@ public class NowCoderTest0_12 {
      * @throws Exception
      */
     public static void test57() throws Exception{
-        Scanner in = new Scanner(System.in);
-        String str1 = in.nextLine();
-        char[] charArray1 = str1.toCharArray();
-        int length1 = charArray1.length;
-        String str2 = in.nextLine();
-        char[] charArray2 = str2.toCharArray();
-        int length2 = charArray2.length;
-
-        if (length1 < 8 && length2 < 8) {
-            System.out.println(Long.parseLong(str1) + Long.parseLong(str2));
-            return;
-        }
-
-        List<String> list = new ArrayList<>();
-
-
-
-    }
-
-
-    /**
-     * (5) *HJ68.成绩排序
-     *
-     * 输入：
-     * 3
-     * 0
-     * fang 90
-     * yang 50
-     * ning 70
-     *
-     * 输出：
-     * fang 90
-     * ning 70
-     * yang 50
-     *
-     * @throws Exception
-     */
-    public static void test68() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int numbers = Integer.parseInt(br.readLine());
-        int sortType = Integer.parseInt(br.readLine());
-        String[][] stringArray = new String[numbers][2];
+        BufferedReader buff = new BufferedReader(new InputStreamReader(System.in));
         String str;
-        int index = 0;// 0代表从高到低，1代表从低到高
-        while ((str = br.readLine()) != null) {
-            String[] tempArray = str.split(" ");
-            stringArray[index][0] = tempArray[0];
-            stringArray[index][1] = tempArray[1];
-            if (index == numbers - 1) {
-                break;
-            }
-            index++;
-        }
-        Arrays.sort(stringArray, new Comparator<String[]>() {
-            @Override
-            public int compare(String[] s1, String[] s2) {
-                if (sortType == 1) {// 升序
-                    return Integer.parseInt(s1[1]) - Integer.parseInt(s2[1]);
-                } else {
-                    // 降序
-                    return Integer.parseInt(s2[1]) - Integer.parseInt(s1[1]);
-                }
+        while ((str = buff.readLine()) != null) {
+            // 1. 转成sb，方便操作
+            StringBuilder sb1 = new StringBuilder(str.trim());
+            StringBuilder sb2 = new StringBuilder(buff.readLine().trim());
 
+            // 2. 对齐，通过补前缀0的方式
+            // s1:  006450
+            // s2:  630222
+            while (sb1.length() != sb2.length()) {
+                if (sb1.length() < sb2.length()) {
+                    sb1.insert(0, '0');
+                } else {
+                    sb2.insert(0, '0');
+                }
             }
-        });
-        System.out.println(str);
+
+            // 3.计算
+            int carry = 0;
+            StringBuilder resultSB = new StringBuilder();
+            for (int i = sb1.length() - 1; i >= 0; i--) {
+                int a = sb1.charAt(i) - '0';
+                int b = sb2.charAt(i) - '0';
+
+                int tmpSum = a + b + carry;
+                if (tmpSum > 9) {
+                    tmpSum = tmpSum % 10;
+                    carry = 1;
+                } else {
+                    carry = 0;
+                }
+                resultSB.insert(0, tmpSum);
+            }
+            // 4. 判断有无进位
+            if (carry == 1) {
+                resultSB.insert(0, '1');
+            }
+
+            // 5. 输出
+            System.out.println(resultSB);
+        }
+    }
+
+
+    /**
+     * HJ58 输入n个整数，输出其中最小的k个
+     * @throws Exception
+     */
+    public static void test58() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = null;
+        while ((str = br.readLine()) != null) {
+            if (str.equals("")) continue;
+            String[] params = str.split(" ");
+            int n = Integer.parseInt(params[0]), k = Integer.parseInt(params[1]);
+            int[] res = new int[n];
+            int start = 0, index = 0;
+            if (params.length > 2) start = 2;
+            else params = br.readLine().split(" ");
+            for (int i = start; i < params.length; i++) {
+                res[index++] = Integer.parseInt(params[i]);
+            }
+            Arrays.sort(res);
+            StringBuilder ans = new StringBuilder();
+            for (int i = 0; i < k; i++) ans.append(res[i]).append(" ");
+            System.out.println(ans.toString().trim());
+        }
     }
 
     /**
-     * 输入：
-     * abc
-     *
-     * 输出：
-     * abc00000
+     * HJ59 找出字符串中第一个只出现一次的字符
      * @throws Exception
      */
-    public static void test4() throws Exception {
+    public static void test59() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String input;
+        while ((input = br.readLine()) != null) {
+            for (int i = 0; i < input.length(); i++) {
+                char c = input.charAt(i);
+                if (input.indexOf(c) == input.lastIndexOf(c)) {
+                    System.out.println(c);
+                    break;
+                }
+                if (i == input.length() - 1) {
+                    System.out.println(-1);
+                }
+            }
+        }
+    }
+
+    private static void my59() throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
         while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
+            Map<Character, Integer> map = new LinkedHashMap<>();
+            char[] charArray = str.toCharArray();
+            for (int i = 0; i < charArray.length; i++) {
+                char c = charArray[i];
+                if (map.containsKey(c)) {
+                    map.put(c, map.get(c) + 1);
+                } else {
+                    map.put(c, 1);
+                }
             }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
+            int min = 0;
+            Set<Map.Entry<Character, Integer>> entrySet = map.entrySet();
+            for (Map.Entry<Character, Integer> entry : entrySet) {
+                Integer value = entry.getValue();
+                if (min == 0) {
+                    min = value;
+                } else {
+                    min = Math.min(min, value);
                 }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
+            }
+            if (min > 1) {
+                System.out.println(-1);
+                continue;
+            }
+            for (Map.Entry<Character, Integer> entry : entrySet) {
+                Integer value = entry.getValue();
+                if (min == value) {
+                    System.out.println(entry.getKey());
+                    break;
                 }
-                System.out.println(String.valueOf(tmp));
             }
         }
     }
