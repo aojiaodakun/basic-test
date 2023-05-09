@@ -13,7 +13,6 @@ import java.util.Scanner;
  * 5.1、*leetcode 面试题08.08.有重复字符串的排列组合
  * 5.2、leetcode 77.组合
  *
- * 6.2、NC17.最长回文子串
  * 6.3、NC28.最小覆盖子串
  *
  * 9.2、*HJ28.素数伴侣

@@ -6,18 +6,15 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Scanner;
 
-/**
- * 未理解
- * 32、动态规划，中心扩散
- */
+
 public class NowCoderTest0_7 {
 
     public static void main(String[] args) throws Exception {
 //        test31();
-//        test32();
+        test32();
 //        test33();
 //        test34();
-        test35();
+//        test35();
     }
 
     /**
@@ -54,6 +51,7 @@ public class NowCoderTest0_7 {
 
     /**
      * HJ32 密码截取
+     * 与回文子串一致
      * @throws Exception
      */
     public static void test32() throws Exception{

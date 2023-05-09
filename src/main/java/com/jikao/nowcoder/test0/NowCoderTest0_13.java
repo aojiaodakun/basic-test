@@ -9,6 +9,7 @@ import java.util.Scanner;
  * TODO
  * 61、动态规划
  * 64、MP3光标位置
+ * 65、动态规划
  */
 public class NowCoderTest0_13 {
 
@@ -16,8 +17,8 @@ public class NowCoderTest0_13 {
 //        test61();
 //        test62();
 //        test63();
-        test64();
-//        test65();
+//        test64();
+        test65();
     }
 
     /**
@@ -211,100 +212,100 @@ public class NowCoderTest0_13 {
         }
     }
 
-    private static void my64() throws IOException {
-        int max = 4;
+    /**
+     * HJ65 查找两个字符串a,b中的最长公共子串
+     * @throws Exception
+     */
+    public static void test65() throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
-        while((str = br.readLine()) != null){
-            // 数字
-            int size = Integer.parseInt(str);
-            int first = 0;// 第一个
-            int currIndex = 1;// 光标
-            boolean isHead = false,isTail = false;
-            // 操作符
-            String opStr = br.readLine();
-            char[] charArray = opStr.toCharArray();
-            for (int i = 0; i < charArray.length; i++) {
-                char tempC = charArray[i];
-                if (tempC == 'U'){
-                    if (currIndex == 1) {
-                        currIndex = size;
-                        first = size - max + 1;
-                        isTail = true;
-                        isHead = false;
-                    } else {
-                        currIndex--;
-                        if (isHead) {
-                            first--;
-                        }
-                        if (currIndex == first) {
-                            isHead = true;
-                            isTail = false;
-                        } else {
-                            isHead = false;
-                            isTail = false;
-                        }
-                    }
-                } else if(tempC == 'D'){
-                    if (currIndex == size) {
-                        currIndex = 1;
-                        first = 1;
-                        isHead = true;
-                        isTail = false;
-                    } else {
-                        currIndex++;
-                        if (isTail) {
-                            first++;
-                        }
-                        if (currIndex == first +3) {
-                            isTail = true;
-                            isHead = false;
-                        } else {
-                            isHead = false;
-                            isTail = false;
-                        }
-                    }
-                }
+        while((str = br.readLine())!=null){
+            String ss = br.readLine();
+            if(str.length()<ss.length()){
+                System.out.println(res(str,ss));
+            }else{
+                System.out.println(res(ss,str));
             }
-            if (size <= max) {
-                for (int i = 0; i < size; i++) {
-                    System.out.print(i+" ");
-                }
-            } else {
-                for (int i = first; i < first + max; i++) {
-                    System.out.print(i + " ");
-                }
-            }
-            System.out.println();
-            System.out.println(currIndex);
         }
     }
 
-
-    public static void test65() throws Exception {
-        Scanner sc = new Scanner(System.in);
-        while(sc.hasNext()){
-            int count = 0;
-            int n = sc.nextInt();
-            for (int i = 1; i <= n; i++) {
-                if (i % 7 == 0) {
-                    count++;
-                    continue;
+    public static String res(String s,String c){
+        char[] ch1 = s.toCharArray();
+        char[] ch2 = c.toCharArray();
+        int[][] ins = new int[ch1.length + 1][ch2.length + 1];
+        int max = 0;
+        int start = 0;
+        for (int i = 0; i < ch1.length; i++) {
+            for (int j = 0; j < ch2.length; j++) {
+                if(ch1[i]==ch2[j]){
+                    ins[i+1][j+1] = ins[i][j]+1;
+                    if(ins[i+1][j+1]>max){
+                        max = ins[i+1][j+1];
+                        start = i-max;
+                    }
                 }
-                char[] charArray = String.valueOf(i).toCharArray();
-                for (int j = 0; j < charArray.length; j++) {
-                    if (charArray[j] == '7') {
+            }
+        }
+        return s.substring(start+1,start+max+1);
+    }
+
+    private static void my65() throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str1;
+        while ((str1 = br.readLine()) != null) {
+            String str2 = br.readLine();
+            String longStr;
+            String shortStr;
+            if (str1.length() >= str2.length()) {
+                longStr = str1;
+                shortStr = str2;
+            } else {
+                longStr = str2;
+                shortStr = str1;
+            }
+
+            int max = 0;
+            int maxIndex = -1;
+
+            int index = -1;
+            int count = 0;
+            char[] shortCharArray = shortStr.toCharArray();
+            int lastIndex = 0;
+            boolean isLast = false;
+            for (int i = 0; i < shortCharArray.length; i++) {
+                for (int j = i+1; j <= shortCharArray.length; j++) {
+                    String tempStr = shortStr.substring(i, j);
+                    if (longStr.contains(tempStr)) {
+                        if (index == -1) {
+                            index =i;
+                        }
                         count++;
+                        if (i == shortCharArray.length -1 || j == shortCharArray.length -1){
+                            isLast = true;
+                        }
+                    } else {
+                        if (count > max) {
+                            maxIndex = index;
+                            max = count;
+                        }
+                        count = 0;
                         break;
                     }
                 }
+                if (isLast) {
+                    if (count > max) {
+                        maxIndex = index;
+                        max = count;
+                    }
+                    break;
+                }
+                index = -1;
             }
-            System.out.println(count);
+            if (maxIndex != -1) {
+                System.out.println(shortStr.substring(maxIndex, maxIndex+max));
+            }
         }
     }
-
-
-
 
 
 }

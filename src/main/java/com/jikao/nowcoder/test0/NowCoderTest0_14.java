@@ -7,16 +7,22 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.Stack;
 
+/**
+ * TODO
+ * 66、
+ * 67、动态规划
+ */
 public class NowCoderTest0_14 {
 
-    // TODO 66,67,69,70
+    // TODO 66,67,70
     public static void main(String[] args) throws Exception {
 //        test66();
 //        test67();
-        test68();
+//        test68();
 //        test69();
-//        test70();
+        test70();
     }
 
     /**
@@ -91,147 +97,164 @@ public class NowCoderTest0_14 {
      * @throws Exception
      */
     public static void test68() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int numbers = Integer.parseInt(br.readLine());
-        int sortType = Integer.parseInt(br.readLine());
-        String[][] stringArray = new String[numbers][2];
-        String str;
-        int index = 0;// 0代表从高到低，1代表从低到高
-        while ((str = br.readLine()) != null) {
-            String[] tempArray = str.split(" ");
-            stringArray[index][0] = tempArray[0];
-            stringArray[index][1] = tempArray[1];
-            if (index == numbers - 1) {
-                break;
+        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+        String str="";
+        while((str=br.readLine())!=null){
+            int n=Integer.parseInt(str.trim());
+            int bool=Integer.parseInt(br.readLine().trim());
+            String[] name =new String[n];
+            int[] score=new int[n];
+            for(int i=0;i<n;i++){
+                str=br.readLine().trim();
+                String[] temp= str.split(" ");
+                name[i]=temp[0];
+                score[i]=Integer.parseInt(temp[1]);
             }
-            index++;
-        }
-        Arrays.sort(stringArray, new Comparator<String[]>() {
-            @Override
-            public int compare(String[] s1, String[] s2) {
-                if (sortType == 1) {// 升序
-                    return Integer.parseInt(s1[1]) - Integer.parseInt(s2[1]);
-                } else {
-                    // 降序
-                    return Integer.parseInt(s2[1]) - Integer.parseInt(s1[1]);
+            if(bool==0){  // 由高到低
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<n-1-i;j++){
+                        if(score[j+1]>score[j]){
+                            String na=name[j];
+                            name[j]=name[j+1];
+                            name[j+1]=na;
+                            int t=score[j];
+                            score[j]=score[j+1];
+                            score[j+1]=t;
+                        }
+
+                    }
+
                 }
-
-            }
-        });
-        System.out.println(str);
-    }
-
-    /**
-     * 输入：
-     * abc
-     *
-     * 输出：
-     * abc00000
-     * @throws Exception
-     */
-    public static void test4() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-        while((str = br.readLine())!=null){
-            int len = str.length();
-            int start = 0;
-            while (len >= 8){
-                System.out.println(str.substring(start, start + 8));
-                start += 8;
-                len -= 8;
-            }
-            if (len > 0) {
-                char[] tmp = new char[8];
-                for(int i = 0;i<8;i++){
-                    tmp[i]='0';
-                }
-                for(int i = 0; start < str.length(); i++) {
-                    tmp[i] = str.charAt(start++);
-                }
-                System.out.println(String.valueOf(tmp));
-            }
-        }
-    }
-
-    /**
-     * (2) HJ20.密码验证合格程序
-     *
-     * 密码要求:
-     * 1.长度超过8位
-     * 2.包括大小写字母.数字.其它符号,以上四种至少三种
-     * 3.不能有长度大于2的包含公共元素的子串重复 （注：其他符号不含空格或换行）
-     *
-     * 数据范围：输入的字符串长度满足
-     * 1≤n≤100
-     *
-     * 输入：
-     * 021Abc9000
-     * 021Abc9Abc1
-     * 021ABC9000
-     * 021$bc9000
-     *
-     * 输出：
-     * OK
-     * NG
-     * NG
-     * OK
-     * @throws Exception
-     */
-    public static void test20() throws Exception {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String input = null;
-        StringBuffer sb = new StringBuffer();
-        while (null != (input = reader.readLine())) {
-            //设置四种类型数据初始为空即false，有数据了就更改为true
-            boolean[] flag = new boolean[4];
-            char[] chars = input.toCharArray();
-
-            // 第一个条件
-            if (chars.length < 9) {
-                sb.append("NG").append("\n");
-                continue;
-            }
-
-            // 第二个条件
-            for (int i = 0; i < chars.length; i++) {
-                if ('A' <= chars[i] && chars[i] <= 'Z') {
-                    flag[0] = true;
-                } else if ('a' <= chars[i] && chars[i] <= 'z') {
-                    flag[1] = true;
-                } else if ('0' <= chars[i] && chars[i] <= '9') {
-                    flag[2] = true;
-                } else {
-                    flag[3] = true;
-                }
-            }
-            int count = 0;
-            for (int i = 0; i < 4; i++) {
-                if (flag[i]) {
-                    count++;
-                }
-            }
-
-            // 第三个条件
-            //不存在两个大于2的子串相同，即！（i=i+3,i+1=i+4,i+2=i+5）
-            boolean sign = true;
-            for (int i = 0; i < chars.length - 5; i++) {
-                for (int j = i + 3; j < chars.length - 2; j++) {
-                    if (chars[i] == chars[j] &&
-                            chars[i + 1] == chars[j + 1] &&
-                            chars[i + 2] == chars[j + 2]) {
-                        sign = false;
+            }else{  // 由低到高
+                for(int i=0;i<n;i++){
+                    for(int j=0;j<n-1-i;j++){
+                        if(score[j+1]<score[j]){
+                            String na=name[j];
+                            name[j]=name[j+1];
+                            name[j+1]=na;
+                            int t=score[j];
+                            score[j]=score[j+1];
+                            score[j+1]=t;
+                        }
                     }
                 }
             }
+            StringBuilder sb = new StringBuilder();
+            for(int i=0;i<n;i++) {
+                sb.append(name[i] + " ");
+                sb.append(score[i]);
+                sb.append("\n");
+            }
+            sb.deleteCharAt(sb.length()-1);
+            System.out.println(sb.toString());
+        }
+    }
 
-            if (count >= 3 && sign) {
-                sb.append("OK").append("\n");
-            } else {
-                sb.append("NG").append("\n");
+    /**
+     * HJ69 矩阵乘法
+     * @throws Exception
+     */
+    public static void test69() throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        int x = Integer.parseInt(reader.readLine());
+        int y = Integer.parseInt(reader.readLine());
+        int z = Integer.parseInt(reader.readLine());
+
+        int[][] array1 = new int[x][y];
+        int[][] array2 = new int[y][z];
+
+        int index = 0;
+        while (index < x) {
+            String line = reader.readLine();
+            String[] tempArray = line.split(" ");
+            for (int i = 0; i < tempArray.length; i++) {
+                array1[index][i] = Integer.parseInt(tempArray[i]);
+            }
+            index++;
+        }
+        index = 0;
+        while (index < y) {
+            String line = reader.readLine();
+            String[] tempArray = line.split(" ");
+            for (int i = 0; i < tempArray.length; i++) {
+                array2[index][i] = Integer.parseInt(tempArray[i]);
+            }
+            index++;
+        }
+        int[][] resultArray = new int[x][z];
+
+        // ***重要，列遍历
+//        for (int j = 0; j < z; j++) { // 第二个矩阵有多少列,2
+//            for (int k = 0; k < y; k++) { // 3
+//                int tempInt = array2[k][j];
+//            }
+//        }
+        // 行*列
+        int sum = 0;
+        for (int i = 0; i < x; i++) { // 2
+            for (int j = 0; j < z; j++) { // 第二个矩阵有多少列,2
+                for (int k = 0; k < y; k++) { // 3
+                    sum += array1[i][k] * array2[k][j];
+                }
+                resultArray[i][j] = sum;
+                sum = 0;
             }
         }
-        System.out.println(sb);
+        // 输出结果
+        for (int i = 0; i < resultArray.length; i++) {
+            for (int j = 0; j < resultArray[0].length; j++) {
+                System.out.print(resultArray[i][j] + " ");
+            }
+            System.out.println();
+        }
 
+    }
+
+    /**
+     * HJ70 矩阵乘法计算量估算
+     * @throws Exception
+     */
+    public static void test70() throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = null;
+        while ((str = br.readLine()) != null) {
+            int num = Integer.parseInt(str);
+            int [][] arr = new int[num][2];
+
+            for (int i = 0;i<num;i++) {
+                String [] matrix = br.readLine().split(" ");
+                arr[i][0] = Integer.parseInt(matrix[0]);
+                arr[i][1] = Integer.parseInt(matrix[1]);
+            }
+
+            int n = arr.length -1;
+            char [] rule = br.readLine().toCharArray();
+            Stack<Integer> stack = new Stack<>();
+            int sum = 0;
+            for (int i = rule.length - 1; i >= 0; i--) {
+                char one = rule[i];
+                if (one == ')') {
+                    stack.push(-1);
+                } else if (one == '(') {
+                    // 前一个矩阵
+                    int n1 = stack.pop();
+                    // 后一个矩阵
+                    int n2 = stack.pop();
+                    sum += arr[n1][0] * arr[n2][0] * arr[n2][1];
+                    // 新矩阵
+                    arr[n1][1] = arr[n2][1];
+                    // 去掉一个右括号
+                    stack.pop();
+                    // 将新矩阵压入栈中
+                    stack.push(n1);
+                } else {
+                    // 压入第n个矩阵
+                    stack.push(n);
+                    n--;
+                }
+            }
+            System.out.println(sum);
+        }
     }
 
 }

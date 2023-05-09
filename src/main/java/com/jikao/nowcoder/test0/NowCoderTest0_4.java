@@ -12,10 +12,10 @@ import java.util.Scanner;
 public class NowCoderTest0_4 {
 
     public static void main(String[] args) throws Exception {
-//        test16();
+        test16();
 //        test17();
 //        test18();
-        test19();
+//        test19();
 //        test20();
     }
 
