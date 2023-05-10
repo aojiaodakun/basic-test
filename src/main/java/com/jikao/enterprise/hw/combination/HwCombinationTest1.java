@@ -14,13 +14,14 @@ public class HwCombinationTest1 {
 
     public static void main(String[] args) throws Exception {
         HwCombinationTest1 my = new HwCombinationTest1();
-//        my.test0();
+        my.test0();
 //        my.test1();
-        my.test2();
+//        my.test2();
 
 
     }
 
+    List<String> res = new ArrayList<>();
     /**
      * 面试题 08.07. 无重复字符串的排列组合
      *
@@ -39,29 +40,39 @@ public class HwCombinationTest1 {
         }
     }
 
-    public String[] permutation0(String str) {
-        permutate0(str.toCharArray(), 0);
-        String[] res = new String[list0.size()];
-        for (int i = 0; i < res.length; i++) {
-            res[i] = list0.get(i);
+    public String[] permutation0(String s) {
+        boolean[] isVisited = new boolean[s.length()];
+        trackback(s,isVisited,new StringBuilder());
+        String[] strs = new String[res.size()];
+        for(int i=0;i<res.size();i++){
+            strs[i] = res.get(i);
         }
-        return res;
+        return strs;
     }
 
-    public void permutate0(char[] arr, int first) {
-        if (first == arr.length - 1) {
-            list0.add(new String(arr));
+    public void trackback(String s,boolean[] isVisited,StringBuilder sb){
+        if(sb.length()==s.length()){
+            res.add(sb.toString());
             return;
         }
-        for (int i = first; i < arr.length; i++) {
-            swap(arr, first, i);
-            permutate0(arr, first + 1);
-            swap(arr, first, i);
+        for(int i=0;i<s.length();i++){
+            if(!isVisited[i]){
+                sb.append(s.charAt(i));
+                isVisited[i]=true;
+                trackback(s,isVisited,sb);
+                sb.deleteCharAt(sb.length()-1);
+                isVisited[i] = false;
+            }
         }
     }
 
 
 
+    List<String> permutations = new ArrayList<String>();
+    StringBuffer temp = new StringBuffer();
+    char[] arr;
+    int n;
+    boolean[] visited;
     /**
      * (1) *leetcode 面试题08.08.有重复字符串的排列组合
      * 有重复字符串的排列组合。编写一种方法，计算某字符串的所有排列组合。
@@ -82,33 +93,32 @@ public class HwCombinationTest1 {
         System.out.println(permutation);
     }
 
-
-    public String[] permutation(String S) {
-        dfs(S.toCharArray(), 0);
-        return list1.toArray(new String[0]);
+    public String[] permutation(String s) {
+        arr = s.toCharArray();
+        Arrays.sort(arr);
+        this.n = s.length();
+        this.visited = new boolean[n];
+        backtrack1(0);
+        return permutations.toArray(new String[permutations.size()]);
     }
-    public void dfs(char[] c, int k){
-        if(k == c.length){
-            list1.add(new String(c));
-            return;
-        }
-        HashSet<Character> set = new HashSet<>();
-        for(int i = k; i < c.length; i++){
-            if(!set.contains(c[i])){
-                set.add(c[i]);
-                swap(c, i, k);
-                dfs(c, k+1);
-                swap(c, i, k);
+
+    public void backtrack1(int index) {
+        if (index == n) {
+            permutations.add(temp.toString());
+        } else {
+            for (int i = 0; i < n; i++) {
+                if (visited[i] || (i > 0 && arr[i] == arr[i - 1] && !visited[i - 1])) {
+                    continue;
+                }
+                temp.append(arr[i]);
+                visited[i] = true;
+                backtrack1(index + 1);
+                temp.deleteCharAt(index);
+                visited[i] = false;
             }
         }
     }
 
-
-    private void swap(char[] chars, int x, int y) {
-        char temp = chars[x];
-        chars[x] = chars[y];
-        chars[y] = temp;
-    }
 
     /**
      * 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。

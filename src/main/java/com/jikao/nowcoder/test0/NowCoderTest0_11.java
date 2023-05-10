@@ -18,10 +18,10 @@ public class NowCoderTest0_11 {
 
     public static void main(String[] args) throws Exception {
 //        test51();
-//        test52();
+        test52();
 //        test53();
 //        test54();
-        test55();
+//        test55();
     }
 
     /**
@@ -72,8 +72,15 @@ public class NowCoderTest0_11 {
         for(int i = 1; i <= arr1.length; i++) {
             for(int j = 1; j <= arr2.length; j++) {
                 if(arr1[i - 1] == arr2[j - 1]) {
+                    // 如果a[i] == b[j]，则说明a[i]和b[j]分别加入a，b之后不会影响levenshtein距离
                     distances[i][j] = distances[i - 1][j - 1];
                 } else {
+                    /**
+                     * 如果a[i] != b[j]，则需要考虑3种情况的可能：
+                     * a中插入字符，即lev[i][j] = lev[i-1][j] + 1;
+                     * b中插入字符，即lev[i][j] = lev[i][j-1] + 1;
+                     * a[i]替换成b[j]，lev[i][j] = lev[i-1][j-1] + 1;
+                     */
                     distances[i][j] = min(distances[i - 1][j], distances[i][j - 1], distances[i - 1][j - 1]) + 1;
                 }
             }

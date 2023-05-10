@@ -12,7 +12,7 @@ import java.util.Map;
  * (2) 排列组合：(牛客搜索)NC61.两数之和
  * (3) 快速排序：HJ3.明明的随机数
  * (4) 哈希表：HJ10.字符个数统计
- * (5) 递归：NC68.跳台阶
+ * (5) 递归：NC68.跳台阶。——牛客
  */
 public class HwRumenTest1 {
 
@@ -78,6 +78,7 @@ public class HwRumenTest1 {
 
     /**
      * (5) 递归：NC68.跳台阶
+     * 题目：https://www.nowcoder.com/practice/8c82a5b80378478f9484d87d1c5f12a4?tpId=117&&tqId=34990&rp=1&ru=/ta/job-code-high&qru=/ta/job-code-high/question-ranking
      * https://blog.csdn.net/qq_39240270/article/details/87185711
      * @throws Exception
      */
@@ -88,12 +89,32 @@ public class HwRumenTest1 {
         System.out.println(i2);
     }
 
+    // 加入数组缓存已计算数据
+    static int[] floorArray = new int[50];
     private static int jumpFloor(int target){
         if (target <= 2) {
             return target;
+        } else if(floorArray[target] >0){
+            return floorArray[target];
         } else {
-            return jumpFloor(target -1) + jumpFloor(target - 2);
+            floorArray[target] = jumpFloor(target -1) + jumpFloor(target - 2);
+            return floorArray[target];
         }
+    }
+
+    /**
+     * 动态规划
+     * @param number
+     * @return
+     */
+    private static int jumpFloor2(int number) {
+        int a = 1 , b = 1 , c = 1;
+        for (int i = 2 ; i <= number ; i ++) {
+            c = a+b;
+            a = b;
+            b = c;
+        }
+        return c;
     }
 
 }

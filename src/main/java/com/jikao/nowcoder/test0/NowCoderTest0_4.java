@@ -33,68 +33,66 @@ public class NowCoderTest0_4 {
      * 2200
      */
     public static void test16() throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str = br.readLine();
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();// 钱
+        int m = sc.nextInt();// 物品
 
-        String[] money_number = str.split(" ");
-        int money = Integer.parseInt(money_number[0]);//钱数
-        int count = Integer.parseInt(money_number[1]);//物品数
-        int v[] = new int[count + 1];//物品的v p q和附件序号
-        int p[] = new int[count + 1];
-        int q[] = new int[count + 1];
-        int sub1[] = new int[count + 1];
-        int sub2[] = new int[count + 1];
-        int dw = 100;// 单位
-        boolean flag = true;
-        for (int i = 1; i < count + 1; i++) {//第i件物品的属性
-            String obj[] = br.readLine().split(" ");
-            v[i] = Integer.parseInt(obj[0]);
-            if (flag && v[i] % dw != 0) {
-                dw = 10;
-                flag = false;
-                for (int m = 1; m < i; m++) {//出现不是整百的，按整十除
-                    v[m] *= 10;
-                    p[m] *= 10;
-                }
-            }
-            v[i] = v[i] / dw;
-            p[i] = Integer.parseInt(obj[1]) * v[i];//价值=价格*权重，需要的是p最大
-            q[i] = Integer.parseInt(obj[2]);
-            if (q[i] > 0) {//是附件
-                if (sub1[q[i]] == 0)
-                    sub1[q[i]] = i;//是附件1
-                else
-                    sub2[q[i]] = i;//是附件2
+        Goods[] goods = new Goods[m];
+        for(int i = 0; i < m; i++){
+            goods[i] = new Goods();
+        }
+        for(int i = 0; i < m; i++){
+            int v = sc.nextInt();
+            int p = sc.nextInt();
+            int q = sc.nextInt();
+            goods[i].v = v;
+            goods[i].p = p * v;  // 直接用p*v，方便后面计算
+            if(q==0){
+                goods[i].main = true;
+            }else if(goods[q-1].a1 == -1){
+                goods[q-1].a1 = i;
+            }else{
+                goods[q-1].a2 = i;
             }
         }
-        money /= dw;
-        int dp[][] = new int[count + 1][money + 1];//money为啥+1？
-        for (int i = 1; i < count + 1; i++) {//两层for循环，动态规划二维表逐列逐行
-            int p1 = 0, p2 = 0, p3 = 0;//根据附件数量，分4种情况v[i]、v1、v2、v3
-            int v1 = -1, v2 = -1, v3 = -1;//
-            if (sub1[i] != 0) {
-                v1 = v[i] + v[sub1[i]];
-                p1 = p[i] + p[sub1[i]];
-            }
-            if (sub2[i] != 0) {
-                v2 = v[i] + v[sub2[i]];
-                p2 = p[i] + p[sub2[i]];
-            }
-            if (sub1[i] != 0 && sub2[i] != 0) {
-                v3 = v1 + v2 - v[i];
-                p3 = p1 + p2 - p[i];
-            }
-            for (int j = 1; j < money + 1; j++) {
-                dp[i][j] = dp[i - 1][j];//最大价值最少是这一件不放进去的大小
-                if (q[i] == 0) {
-                    if (j >= v[i]) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v[i]] + p[i]);
-                    if (v1 != -1 && j >= v1) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v1] + p1);
-                    if (v2 != -1 && j >= v2) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v2] + p2);
-                    if (v3 != -1 && j >= v3) dp[i][j] = Math.max(dp[i][j], dp[i - 1][j - v3] + p3);
+        /**
+         * 5种情况，不购买该物品，购买该物品，购买该物品及附件1，购买该物品及附件2，购买该物品及附件1及附件2
+         */
+        int[][] dp = new int[m+1][N+1];
+        for(int i = 1; i <= m; i++){
+            for(int j = 0; j <= N; j++){
+                dp[i][j] = dp[i-1][j];
+                if(!goods[i-1].main){
+                    continue;
+                }
+                // 主件
+                if(j>=goods[i-1].v){
+                    dp[i][j] = Math.max(dp[i][j], dp[i-1][j-goods[i-1].v] + goods[i-1].p);
+                }
+                // 主件+附件1
+                if(goods[i-1].a1 != -1 && j >= goods[i-1].v + goods[goods[i-1].a1].v){
+                    dp[i][j] = Math.max(dp[i][j], dp[i-1][j-goods[i-1].v - goods[goods[i-1].a1].v] + goods[i-1].p + goods[goods[i-1].a1].p);
+                }
+                // 主件+附件2
+                if(goods[i-1].a2 != -1 && j >= goods[i-1].v + goods[goods[i-1].a2].v){
+                    dp[i][j] = Math.max(dp[i][j], dp[i-1][j-goods[i-1].v - goods[goods[i-1].a2].v] + goods[i-1].p + goods[goods[i-1].a2].p);
+                }
+                // 主件+附件1+附件2
+                if(goods[i-1].a1 != -1 && goods[i-1].a2 != -1 &&  j >= goods[i-1].v + goods[goods[i-1].a1].v + goods[goods[i-1].a2].v){
+                    dp[i][j] = Math.max(dp[i][j], dp[i-1][j-goods[i-1].v - goods[goods[i-1].a1].v - goods[goods[i-1].a2].v] + goods[i-1].p + goods[goods[i-1].a1].p + goods[goods[i-1].a2].p);
                 }
             }
         }
-        System.out.println(dp[count][money] * dw);
+        System.out.println(dp[m][N]);
+    }
+
+    private static class Goods {
+        int v;// 单价
+        int p;// 满意度
+        boolean main = false;
+
+        int a1 = -1;  //定义附件1的编号
+        int a2 = -1;  //定义附件2的编号
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.jikao.enterprise.hw.exam;
 
+import com.hzk.datastructure.dfs.DfsTest;
 import com.jikao.nowcoder.test0.NowCoderTest0_1;
+import com.jikao.nowcoder.test0.NowCoderTest0_11;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -17,12 +19,26 @@ import java.util.Scanner;
  *
  * 9.2、*HJ28.素数伴侣
  */
+
+/**
+ * 动态规划问题
+ * dfsProblem
+ */
 public class ExamTest1 {
 
     public static void main(String[] args) throws Exception {
 //        test1();
 //        test2();
         test3();
+    }
+
+    private static void dfsProblem() throws Exception{
+        // 01背包问题
+        DfsTest.packageProblem();
+        // HJ52 计算字符串的编辑距离
+        NowCoderTest0_11.test52();
+        //
+
     }
 
     /**
