@@ -31,28 +31,36 @@ public class NowCoderTest0_9 {
      * 可以表示出0，1，2，3，4五种重量。
      */
     public static void test41() throws Exception{
-        Scanner in = new Scanner(System.in);
-        while (in.hasNextInt()) {
-            HashSet<Integer> set = new HashSet<>();//存放所有可能的结果，不用担心重复问题
-            set.add(0);//初始化为0
-            int n = in.nextInt();//个数
-            int[] w = new int[n];
-            int[] nums = new int[n];
-            for(int i=0;i<n;i++){
-                w[i] = in.nextInt();//砝码的重量
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            int n = Integer.parseInt(line);
+            String[] s1 = reader.readLine().split(" ");
+            String[] s2 = reader.readLine().split(" ");
+            int[] weight = new int[n];
+            int[] number = new int[n];
+            for (int i = 0; i < n; i++) {
+                weight[i] = Integer.parseInt(s1[i]);
+                number[i] = Integer.parseInt(s2[i]);
             }
-            for(int i=0;i<n;i++){
-                nums[i] = in.nextInt();//砝码个数
-            }
-            for(int i=0;i<n;i++){//遍历砝码
-                ArrayList<Integer> list = new ArrayList<>(set);//取当前所有的结果
-                for(int j=1;j<=nums[i];j++){//遍历个数
-                    for(int k=0;k<list.size();k++){
-                        set.add(list.get(k) + w[i] * j);
+            boolean[] exist = new boolean[10 * 10 * 2000];//最大值10*10*2000
+            int[] arr = new int[20000];//存放可能的值,存到第几位说明有多少种可能,0位不算
+            int count = 1;
+            for (int i = 0; i < n; i++) {// 类型
+                for (int j = 0; j < number[i]; j++) {// 数量
+                    //对现有总重量数组进行遍历(新增的元素在下次j循环中加入)
+                    int index = count;
+                    for (int k = 0; k < index; k++) {
+                        int sum = arr[k] + weight[i];
+                        if (!exist[sum]) {
+                            exist[sum] = true;
+                            arr[count] = sum;
+                            count++;
+                        }
                     }
                 }
             }
-            System.out.println(set.size());
+            System.out.println(count);
         }
     }
 
