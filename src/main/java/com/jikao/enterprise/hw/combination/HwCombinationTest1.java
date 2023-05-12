@@ -107,6 +107,7 @@ public class HwCombinationTest1 {
             permutations.add(temp.toString());
         } else {
             for (int i = 0; i < n; i++) {
+                // 排序之后，相同字符位于字符数组中的相邻位置，可以利用这一特点去重
                 if (visited[i] || (i > 0 && arr[i] == arr[i - 1] && !visited[i - 1])) {
                     continue;
                 }
@@ -121,6 +122,7 @@ public class HwCombinationTest1 {
 
 
     /**
+     * leetcode 77.组合
      * 给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
      *
      * 你可以按 任何顺序 返回答案。
@@ -144,6 +146,7 @@ public class HwCombinationTest1 {
     }
 
     private void dfs(int n, int k, int begin, Deque<Integer> path, List<List<Integer>> res) {
+        // 递归终止条件是：path 的长度等于 k
         if (path.size() == k) {
             res.add(new ArrayList<>(path));
             return;
@@ -151,6 +154,7 @@ public class HwCombinationTest1 {
         for (int i = begin; i <= n; i++) {
             path.addLast(i);
             System.out.println("递归之前 => " + path);
+            // 下一轮搜索，设置的搜索起点要加 1，因为组合数理不允许出现重复的元素
             dfs(n, k, i + 1, path, res);
             path.removeLast();
             System.out.println("递归之后 => " + path);

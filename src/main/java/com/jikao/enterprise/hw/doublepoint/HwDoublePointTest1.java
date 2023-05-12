@@ -170,11 +170,9 @@ public class HwDoublePointTest1 {
     }
 
     public boolean check() {
-        Iterator<Map.Entry<Character, Integer>> iter = ori.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry entry = (Map.Entry) iter.next();
-            Character key = (Character) entry.getKey();
-            Integer val = (Integer) entry.getValue();
+        for (Map.Entry<Character, Integer> entry : ori.entrySet()) {
+            Character key = entry.getKey();
+            Integer val = entry.getValue();
             if (cnt.getOrDefault(key, 0) < val) {
                 return false;
             }
