@@ -1,11 +1,7 @@
 package com.jikao.enterprise.hw.sort;
 
 import com.jikao.leetcode.LeetCodeTest1;
-import com.jikao.nowcoder.test0.*;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.StreamTokenizer;
+import com.jikao.nowcoder.hw.*;
 
 /**
  * 3.排序（5题）

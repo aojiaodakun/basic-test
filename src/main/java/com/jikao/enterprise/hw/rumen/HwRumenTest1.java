@@ -1,7 +1,7 @@
 package com.jikao.enterprise.hw.rumen;
 
-import com.jikao.nowcoder.test0.NowCoderTest0_1;
-import com.jikao.nowcoder.test0.NowCoderTest0_2;
+import com.jikao.nowcoder.hw.NowCoderTest0_1;
+import com.jikao.nowcoder.hw.NowCoderTest0_2;
 
 import java.util.HashMap;
 import java.util.Map;

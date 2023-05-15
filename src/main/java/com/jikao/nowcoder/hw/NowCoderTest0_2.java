@@ -1,10 +1,8 @@
-package com.jikao.nowcoder.test0;
+package com.jikao.nowcoder.hw;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class NowCoderTest0_2 {

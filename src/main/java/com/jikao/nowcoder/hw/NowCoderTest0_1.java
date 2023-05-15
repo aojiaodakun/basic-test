@@ -1,70 +1,33 @@
-package com.jikao.nowcoder.test1;
+package com.jikao.nowcoder.hw;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class NowCoderTest1_2 {
+public class NowCoderTest0_1 {
 
-    // TODO 107,109,110
+
     public static void main(String[] args) throws Exception {
-//        test106();
+//        test1();
 //        test2();
-        test108();
+//        test3();
 //        test4();
-//        test5();
+        test5();
     }
 
     /**
-     * (6) *HJ106.字符串逆序
+     * hello nowcoder
      *
-     * 将一个字符串str的内容颠倒过来，并输出。
-     *
-     * 输入：
-     * I am a student
-     *
-     * 输出：
-     * tneduts a ma I
-     *
-     * @throws Exception
+     * 8
      */
-    public static void test106() throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String inputCount;
-        while ((inputCount = br.readLine()) != null) {
-            StringBuilder sb = new StringBuilder();
-            char[] charArray = inputCount.toCharArray();
-            for (int i = charArray.length-1; i >= 0; i--) {
-                sb.append(charArray[i]);
-            }
-            System.out.println(sb);
+    public static void test1() {
+        Scanner in = new Scanner(System.in);
+        while (in.hasNext()) {
+            String str = in.nextLine();
+            String[] tempArray = str.split(" ");
+            int length = tempArray[tempArray.length - 1].length();
+            System.out.println(length);
         }
-    }
-
-    public static void quickSort(int[] num, int L, int R) {
-        if (L >= R) {
-            return;
-        }
-        int p = partition(num, L, R);
-        quickSort(num, L, p - 1);
-        quickSort(num, p+1, R);
-    }
-
-    public static int partition(int[] num, int L, int R) {
-        int key = num[L];
-        int pivot = L;
-
-        for (int i = L + 1; i <= R; i++) {
-            if (num[i] < key) {
-                int temp = num[++pivot];
-                num[pivot] = num[i];
-                num[i] = temp;
-            }
-        }
-        int tt = num[pivot];
-        num[pivot] = num [L];
-        num[L] = tt;
-        return pivot;
     }
 
     /**
@@ -84,37 +47,35 @@ public class NowCoderTest1_2 {
     }
 
     /**
-     * (1) *HJ108.求最小公倍数
-     * 正整数A和正整数B 的最小公倍数是指 能被A和B整除的最小的正整数值，设计一个算法，求输入A和B的最小公倍数。
-     * 数据范围：1≤a,b≤100000
      * 输入：
-     * 5 7
+     * 3
+     * 2
+     * 2
+     * 1
      *
      * 输出：
-     * 35
-     *
-     * 输入：
-     * 2 4
-     *
-     * 输出：
-     * 4
+     * 1
+     * 2
      */
-    public static void test108() throws Exception {
+    public static void test3() throws Exception {
         BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
         String str;
         while ((str = bf.readLine()) != null) {
-            String[] strArray = str.split(" ");
-            int a = Integer.parseInt(strArray[0]);
-            int b = Integer.parseInt(strArray[1]);
-            int min = Math.min(a, b);
-            int max = Math.max(a, b);
-            for (int i = 1; i <= min; i++) {
-                int tempNum = max * i;
-                if (tempNum % min == 0) {
-                    System.out.println(tempNum);
-                    break;
+            boolean[] flagArrays = new boolean[1001];
+            StringBuilder sb = new StringBuilder();
+            int n = Integer.parseInt(str);
+            for (int i = 0; i < n; i++){
+                flagArrays[Integer.parseInt(bf.readLine())] = true;
+            }
+
+            for (int i = 0; i < 1001; i++){
+                if (flagArrays[i]) {
+                    sb.append(i).append("\n");
                 }
             }
+
+            sb.deleteCharAt(sb.length() - 1);
+            System.out.println(sb);
         }
     }
 

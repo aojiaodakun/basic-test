@@ -1,4 +1,4 @@
-package com.jikao.nowcoder.test0;
+package com.jikao.nowcoder.hw;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

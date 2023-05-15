@@ -1,11 +1,9 @@
-package com.jikao.nowcoder.test0;
+package com.jikao.nowcoder.hw;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 
 
@@ -15,7 +13,6 @@ public class NowCoderTest0_21 {
 //        test101();
 //        test102();
         test103();
-//        test104();
 //        test105();
     }
 
@@ -96,66 +93,69 @@ public class NowCoderTest0_21 {
 
 
     /**
-     * HJ103 Redraiment的走法 TODO
+     * HJ103 Redraiment的走法
+     * 求最长递增子序列长度
      * @throws Exception
      */
     public static void test103() throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-        while((str=br.readLine())!=null){
-            int n = Integer.parseInt(str);
-            String line = br.readLine();
-            int max = 0;
-            String[] strArray = line.split(" ");
-            for (int i = 0; i < strArray.length; i++) {
-                int left = Integer.parseInt(strArray[i]);
-                int count = 0;
-                for (int j = i+1; j < strArray.length; j++) {
-                    int right = Integer.parseInt(strArray[j]);
-                    if (right > left) {
-                        left = right;
-                        count++;
-                    }
-                }
-                if (count>0) {
-                    max = Math.max(count, max);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        String string;
+        while ((string=bufferedReader.readLine())!=null){
+            int num = Integer.parseInt(string);
+            String[] strings = bufferedReader.readLine().split(" ");
+            int[] arr = new int[num];
+            for(int i=0;i<num;i++){
+                arr[i] = Integer.parseInt(strings[i]);
+            }
+            System.out.println(helper(arr));
+        }
+    }
+
+    public static int helper(int[] arr){
+        if(arr.length==0) return 0;
+        int[] dp = new int[arr.length];
+        for(int i=0;i<arr.length;i++){
+            dp[i] = 1;
+        }
+        for(int i=0;i<arr.length;i++){
+            int right = arr[i];
+            for(int j=0;j<i;j++){
+                if(arr[j]<right){
+                    dp[i] = Math.max(dp[i],dp[j]+1);
                 }
             }
-            System.out.println(max);
         }
-
+        int ans = 0;
+        for(int i:dp){
+            ans = Math.max(ans,i);
+        }
+        return ans;
     }
 
 
     /**
-     * HJ94 记票统计
+     * HJ105 记负均正II
      * @throws Exception
      */
-    public static void test94() throws Exception{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String line;
-        while((line = br.readLine()) != null){
-            int n = Integer.parseInt(line);
-            String[] name = br.readLine().split(" ");
-            int[] num = new int[n+1];
-            int tt = 0;
-            int invalidData = 0;
-            int voteData = Integer.parseInt(br.readLine());
-            String[] vote = br.readLine().split(" ");
-            for(int i = 0; i < vote.length; i++){
-                for(int j = 0; j < n; j++){
-                    if(vote[i].equals(name[j])){
-                        num[j]++;
-                        break;
-                    }
-                }
+    public static void test105() throws Exception{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        String str = null;
+        int count=0, total=0, countNot = 0;
+        while((str =reader.readLine())!=null){
+            int num = Integer.parseInt(str);
+            if(num < 0){
+                count++;
+            }else {
+                total+= num;
+                countNot++;
             }
-            for(int m = 0; m < name.length; m++){
-                tt += num[m];
-                System.out.println(name[m] + " : " + num[m]);
-            }
-            invalidData = voteData - tt;
-            System.out.println("Invalid : " + invalidData);
+        }
+        System.out.println(count);
+        if(countNot==0){
+            System.out.println(0.0);
+        }else{
+            long round = Math.round(total * 10.0 / countNot);
+            System.out.println(round/10+"."+round%10);
         }
     }
 

@@ -1,11 +1,9 @@
 package com.jikao.enterprise.hw.exam;
 
 import com.hzk.datastructure.dfs.DfsTest;
-import com.jikao.nowcoder.test0.NowCoderTest0_1;
-import com.jikao.nowcoder.test0.NowCoderTest0_11;
+import com.jikao.nowcoder.hw.NowCoderTest0_1;
+import com.jikao.nowcoder.hw.NowCoderTest0_11;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**

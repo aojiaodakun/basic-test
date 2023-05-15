@@ -1,13 +1,7 @@
-package com.jikao.nowcoder.test0;
-
-import scala.Int;
+package com.jikao.nowcoder.hw;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Scanner;
 
 
 public class NowCoderTest0_17 {

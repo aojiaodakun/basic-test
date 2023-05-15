@@ -1,6 +1,6 @@
 package com.jikao.enterprise.hw.deepsearch;
 
-import com.jikao.nowcoder.test0.NowCoderTest0_9;
+import com.jikao.nowcoder.hw.NowCoderTest0_9;
 
 /**
  * 7.深搜（1题）

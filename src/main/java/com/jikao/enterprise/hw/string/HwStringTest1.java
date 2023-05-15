@@ -1,10 +1,10 @@
 package com.jikao.enterprise.hw.string;
 
-import com.jikao.nowcoder.test0.NowCoderTest0_4;
-import com.jikao.nowcoder.test0.NowCoderTest0_5;
-import com.jikao.nowcoder.test0.NowCoderTest0_7;
-import com.jikao.nowcoder.test1.NowCoderTest1_1;
-import com.jikao.nowcoder.test1.NowCoderTest1_2;
+import com.jikao.nowcoder.hw.NowCoderTest0_21;
+import com.jikao.nowcoder.hw.NowCoderTest0_22;
+import com.jikao.nowcoder.hw.NowCoderTest0_4;
+import com.jikao.nowcoder.hw.NowCoderTest0_5;
+import com.jikao.nowcoder.hw.NowCoderTest0_7;
 
 /**
  * 2.字符串操作（6题）
@@ -58,14 +58,14 @@ public class HwStringTest1 {
      * (5) HJ101.输入整型数组和排序标识
      */
     private static void test5() throws Exception{
-        NowCoderTest1_1.test101();
+        NowCoderTest0_21.test101();
     }
 
     /**
      * (6) *HJ106.字符串逆序
      */
     private static void test6() throws Exception{
-        NowCoderTest1_2.test106();
+        NowCoderTest0_22.test106();
     }
 
 }

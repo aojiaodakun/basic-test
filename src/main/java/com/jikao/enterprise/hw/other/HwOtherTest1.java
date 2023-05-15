@@ -1,10 +1,9 @@
 package com.jikao.enterprise.hw.other;
 
-import com.jikao.nowcoder.test0.NowCoderTest0_1;
-import com.jikao.nowcoder.test0.NowCoderTest0_12;
-import com.jikao.nowcoder.test0.NowCoderTest0_5;
-import com.jikao.nowcoder.test0.NowCoderTest0_6;
-import com.jikao.nowcoder.test1.NowCoderTest1_2;
+import com.jikao.nowcoder.hw.NowCoderTest0_12;
+import com.jikao.nowcoder.hw.NowCoderTest0_22;
+import com.jikao.nowcoder.hw.NowCoderTest0_5;
+import com.jikao.nowcoder.hw.NowCoderTest0_6;
 
 import java.util.*;
 
@@ -34,7 +33,7 @@ public class HwOtherTest1 {
      * (1) *HJ108.求最小公倍数
      */
     private static void test1() throws Exception{
-        NowCoderTest1_2.test108();
+        NowCoderTest0_22.test108();
     }
 
     /**
