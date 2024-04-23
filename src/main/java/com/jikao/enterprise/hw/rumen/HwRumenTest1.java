@@ -17,7 +17,7 @@ import java.util.Map;
 public class HwRumenTest1 {
 
     public static void main(String[] args) throws Exception {
-//        test1();
+        test1();
 //        test2();
 //        test3();
 //        test4();

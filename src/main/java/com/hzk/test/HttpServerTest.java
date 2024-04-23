@@ -33,7 +33,7 @@ public class HttpServerTest {
     }
 
     public static void main(String[] args) throws Exception {
-        HttpServer httpServer = HttpServer.create(new InetSocketAddress(8002), 0);
+        HttpServer httpServer = HttpServer.create(new InetSocketAddress(3658), 0);
         httpServer.createContext("/test", new TestHandler());
         httpServer.start();
     }

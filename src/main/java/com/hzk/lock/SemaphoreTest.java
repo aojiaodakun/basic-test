@@ -14,6 +14,7 @@ public class SemaphoreTest {
             new Thread(()->{
                 try {
                     semaphore.acquire();
+                    System.out.println("可用信号量:" + semaphore.availablePermits());
                     System.out.println(Thread.currentThread().getName() + " 抢到了车位");
                     System.out.println("-------------------------");
                     TimeUnit.SECONDS.sleep(2);

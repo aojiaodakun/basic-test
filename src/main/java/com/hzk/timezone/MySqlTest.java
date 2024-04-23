@@ -24,7 +24,6 @@ public class MySqlTest {
 
     }
 
-
     /**
      * -Duser.timezone=Asia/Shanghai
      * -Duser.timezone=Europe/Berlin

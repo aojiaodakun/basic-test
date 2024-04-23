@@ -3,30 +3,43 @@ package com.hzk.test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
+import com.hzk.net.util.HttpClientUtil;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.openjdk.jmh.util.FileUtils;
+import sun.reflect.Reflection;
+import sun.tools.jmap.JMap;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.io.StringReader;
+import java.lang.management.ManagementFactory;
+import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -69,10 +82,85 @@ public class Test1 {
         }
     }
 
+    private static List<String> list = new ArrayList<>();
+    private static void sort1(String str, boolean[] visited, StringBuilder sb) {
+        if (sb.length() == str.length()) {
+            list.add(sb.toString());
+            return;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            if (!visited[i]) {
+                sb.append(str.charAt(i));
+                visited[i] = true;
+                sort1(str, visited, sb);
+                sb.deleteCharAt(sb.length()-1);
+                visited[i] = false;
+            }
+        }
+
+    }
+
+
 
     public static void main(String[] args) throws Exception {
+        java.lang.System.setProperty("elasticsearch.server.audit", "");
+
+        StringBuilder sb = new StringBuilder();
+        Thread currentThread = Thread.currentThread();
+        StackTraceElement[] stackTraceElements = currentThread.getStackTrace();
+        for (StackTraceElement element : stackTraceElements) {
+            sb.append(element.getClassName() + "." + element.getMethodName() + "(" + element.getFileName() + ":" + element.getLineNumber() + ")").append("\n");
+        }
+        System.out.println(sb.toString());
+        Date date = new Date(1707206414904L);
+
+        System.out.println(String.format("滚动重启%s服务等待重启时间超过了%d分钟,结束等待", "hzkService", 1L));
+
+        System.out.println(URLEncoder.encode("http://172.19.72.130:9998/monitor/goldeye/arthas/command/exec?line=1"));
+
+        long time = new Date().getTime() + 60000;
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date(time)));
 
 
+        byte[] allBytes = new byte[1024];
+        byte[] bytes = new byte[] {
+                'a','b','c','d'
+        };
+        byte[] bytes1 = new byte[] {
+                'e','f','g'
+        };
+        System.arraycopy(bytes, 0, allBytes, 0, bytes.length);
+        System.arraycopy(bytes1, 0, allBytes, bytes.length, bytes1.length);
+
+
+
+
+        String str1 = "attachmentServer.maxFileSize=1052428800\n" +
+                "attachmentServer.tcpUrl={{attachmentServer.ip}}:{{attachmentServer.tcpport}}\n" +
+                "attachmentServer.url=http://172.17.51.95:8100/fileserver\n" +
+                "attachment.fileserver=https://{{attachment.fileserver.ip_port}}/attachment/download.do?path=/\n" +
+                "fileserver.attachment.preview=true\n" +
+                "check.file.zip=";
+
+        Properties prop = new Properties();
+        StringReader reader = new StringReader(str1);
+        prop.load(reader);
+//        Map<String, String> map = new HashMap<String, String>((Map) prop);
+        Map<String, String> map = (Map) prop;
+        String collect = map.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + entry.getValue())
+                .collect(Collectors.joining("\n"));
+
+        String urlString1 = "accountId=1150550063915728896&loginConfigNumber=hzk&bizUserId=003&bizCustomParam=myDiyParam666";
+        Map<String, String> queryMap = Splitter.onPattern("&").trimResults().withKeyValueSeparator("=").split(urlString1);
+
+
+
+
+        String str = "qwe";
+        boolean[] visited = new boolean[str.length()];
+        sort1(str, visited, new StringBuilder());
+        System.out.println();
 
 
 
@@ -114,16 +202,12 @@ public class Test1 {
 //        String query = url.getQuery();
 
 
-        String urlString1 = "accountId=1150550063915728896&loginConfigNumber=hzk&bizUserId=003&bizCustomParam=myDiyParam666";
-
-        Map<String, String> queryMap = Splitter.onPattern("&").trimResults().withKeyValueSeparator("=").split(urlString1);
 
 
-
-        String clazzPath = "target/classes/com/hzk/test/EvilClass.class";
-        byte[] bytes = IOUtils.toByteArray(new FileInputStream(clazzPath));
-        byte[] base64Bytes = Base64.getEncoder().encode(bytes);
-        String evilCode = new String(base64Bytes);
+//        String clazzPath = "target/classes/com/hzk/test/EvilClass.class";
+//        byte[] bytes = IOUtils.toByteArray(new FileInputStream(clazzPath));
+//        byte[] base64Bytes = Base64.getEncoder().encode(bytes);
+//        String evilCode = new String(base64Bytes);
 
         String NASTY_CLASS = "com.sun.org.apache.xalan.internal.xsltc.trax.TemplatesImpl";
 //        JSONObject jsonObject = new JSONObject();

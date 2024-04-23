@@ -1,4 +1,4 @@
-package com.hzk.exception;
+package com.hzk.test;
 
 public class ExceptionTest {
 
