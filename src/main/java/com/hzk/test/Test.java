@@ -1,22 +1,10 @@
 package com.hzk.test;
 
-import com.hzk.aqs.BlockingQueueDemo;
-import com.hzk.net.util.HttpClientUtil;
-
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
-import java.util.Queue;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class Test {
 

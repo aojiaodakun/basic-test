@@ -3,43 +3,21 @@ package com.hzk.test;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Splitter;
-import com.hzk.net.util.HttpClientUtil;
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-import org.openjdk.jmh.util.FileUtils;
-import sun.reflect.Reflection;
-import sun.tools.jmap.JMap;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.OutputStream;
-import java.io.Serializable;
 import java.io.StringReader;
-import java.lang.management.ManagementFactory;
-import java.lang.reflect.Method;
 import java.net.URI;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 /**
@@ -101,9 +79,45 @@ public class Test1 {
     }
 
 
+    public static class ExitSecurityManager extends SecurityManager {
+        @Override
+        public void checkExit(int status) {
+            super.checkExit(status);
+            // 打印堆栈跟踪
+            Thread.currentThread().dumpStack();
+            System.out.println("checkExit");
+            // 可以选择退出或不退出
+            // System.exit(status);
+        }
+    }
 
     public static void main(String[] args) throws Exception {
-        java.lang.System.setProperty("elasticsearch.server.audit", "");
+        System.setProperty("a", "1");
+
+        Runtime.getRuntime().addShutdownHook(new Thread(()->{
+            try {
+                Thread.currentThread().sleep(1000 * 60 * 60);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }));
+
+        System.exit(1);
+        Timer timer1 = new Timer("a");
+        timer1.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("aaasaaa");
+            }
+        }, 100);
+
+        Map<String, String> map1 = new HashMap<>();
+        map1.put("a", "a");
+        map1.put("b", "b");
+        map1.put("c", "c");
+
+        int i = map1.keySet().toString().hashCode();
+        System.out.println(i);
 
         StringBuilder sb = new StringBuilder();
         Thread currentThread = Thread.currentThread();
