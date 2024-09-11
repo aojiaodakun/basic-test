@@ -14,17 +14,19 @@ public class ThreadTest {
             executorService.execute(()->{
                 try {
                     System.out.println(Thread.currentThread().getName() + " start");
-                    Thread.currentThread().sleep(1000 * 10);
+                    Thread.currentThread().sleep(1000 * 1);
                     System.out.println(Thread.currentThread().getName() + " end");
                 } catch (Exception e) {
 
                 }
             });
         }
-        Thread.currentThread().sleep(1000 * 5);
-        executorService.setCorePoolSize(3);
-        executorService.setMaximumPoolSize(5);
-        System.out.println("do");
+        System.in.read();
+
+//        Thread.currentThread().sleep(1000 * 5);
+//        executorService.setCorePoolSize(3);
+//        executorService.setMaximumPoolSize(5);
+//        System.out.println("do");
 
 //        ThreadTest threadTest = new ThreadTest();
 //        threadTest.invoke();

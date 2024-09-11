@@ -10,9 +10,19 @@
     </appender>
 
 
+    <appender name="kafka" class="com.hzk.framework.log.slf4j.logback.KafkaAppender">
+        <topic>feature_dev-log</topic>
+        <brokerList>127.0.0.1:9092</brokerList>
+        <compressionType>none</compressionType>
+        <syncSend>false</syncSend>
+        <keySerializerClass>org.apache.kafka.common.serialization.StringSerializer</keySerializerClass>
+        <valueSerializerClass>org.apache.kafka.common.serialization.StringSerializer</valueSerializerClass>
+    </appender>
+
+
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>log.%d{yyyy-MM-dd}(%i).log</FileNamePattern>
+            <FileNamePattern>${LOG_HOME}/log.%d{yyyy-MM-dd}(%i).log</FileNamePattern>
             <cleanHistoryOnStart>true</cleanHistoryOnStart>
             <maxHistory>5</maxHistory>
             <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -27,14 +37,16 @@
         <prudent>false</prudent>
     </appender>
 
-    <logger name="org.apache" additivity="false" level="ERROR">
+    <logger name="org.apache" additivity="false"  level="INFO">
         <appender-ref ref="stdot" />
     </logger>
 
-    <root level="INFO">
+<!--    <logger name="com.hzk.framework.log.slf4j.logback.LogbackTest" additivity="false"  level="INFO"/>-->
+
+    <root level="OFF">
+        <appender-ref ref="kafka" />
         <appender-ref ref="stdot" />
     </root>
-
 
 
 </configuration>

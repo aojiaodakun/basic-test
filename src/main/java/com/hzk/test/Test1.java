@@ -92,6 +92,14 @@ public class Test1 {
     }
 
     public static void main(String[] args) throws Exception {
+        Test1 test1 = new Test1();
+        Test1 test2 = new Test1();
+        boolean equals = test1.equals(test2);
+
+        System.out.println(Integer.toHexString(31355));
+        System.out.println(Integer.toHexString(31352));
+        System.out.println(Integer.toHexString(31312));
+
         System.setProperty("a", "1");
 
         Runtime.getRuntime().addShutdownHook(new Thread(()->{

@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * hutoolDate序列化问题
  */
-public class HutoolTest {
+public class HutoolDateTest {
 
     public static void main(String[] args) {
         Date today = DateUtil.parse(DateUtil.today());

@@ -8,6 +8,7 @@
     <artifactId>basic</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
     <properties>
         <metrics_version>4.2.3</metrics_version>
     </properties>
@@ -23,6 +24,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
             <version>3.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.15</version>
         </dependency>
 
         <dependency>
@@ -119,11 +125,11 @@
             <version>42.2.16</version>
         </dependency>
         <!-- 老版本，客户端连接不带时区，以服务端时区为准 -->
-<!--        <dependency>-->
-<!--            <groupId>postgresql</groupId>-->
-<!--            <artifactId>postgresql</artifactId>-->
-<!--            <version>8.0-312.jdbc3</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>postgresql</groupId>-->
+        <!--            <artifactId>postgresql</artifactId>-->
+        <!--            <version>8.0-312.jdbc3</version>-->
+        <!--        </dependency>-->
 
 
         <!-- metric start -->
@@ -167,7 +173,7 @@
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
-            <version>5.7.19</version>
+            <version>5.8.31</version>
         </dependency>
         <!-- hutool end -->
 
@@ -242,6 +248,16 @@
             <version>1.2.13</version>
         </dependency>
         <!-- 日志框架 end-->
+
+        <!-- jmxtools start-->
+        <!-- https://dist.wso2.org/maven2/com/sun/jdmk/jmxtools/1.2.1/ -->
+        <dependency>
+            <groupId>com.sun.jdmk</groupId>
+            <artifactId>jmxtools</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+        <!-- jmxtools end-->
+
     </dependencies>
 
     <build>
@@ -257,7 +273,6 @@
             </plugin>
         </plugins>
     </build>
-
 
 
 </project>
